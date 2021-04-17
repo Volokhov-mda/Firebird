@@ -1,0 +1,52 @@
+@import "./../../variables.scss";
+
+#logo {
+  width: 52px;
+  height: 52px;
+
+  transition: 1s;
+
+  .background {
+    fill: $base-color;
+
+    transition: 1s;
+  }
+
+  .text {
+    fill: #fff;
+  }
+}
+
+#logo:hover {
+  transform: rotate(90deg);
+
+  .background {
+    fill: $ppnp-color;
+  }
+}
+
+#menu-icon {
+  .line {
+    fill: #fff;
+  }
+
+  .background {
+    fill: $base-color;
+  }
+}
+
+.nav-buttons-wrapper {
+
+}
+
+@media (min-width: $bp-640-lower) {
+  .nav-buttons-wrapper {
+    display: block;
+  }
+}
+
+@media (max-width: $bp-640-upper) {
+  .nav-buttons-wrapper {
+    display: none;
+  }
+}

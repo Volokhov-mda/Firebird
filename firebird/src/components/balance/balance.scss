@@ -1,0 +1,122 @@
+@import "./../../variables.scss";
+
+.balance-container {
+    margin: 0 auto -68px;
+
+    background-color: $base-background-color-top;
+
+    #balance-wrapper-desktop,
+    #balance-wrapper-mobile {
+        // display: flex; Media query
+        justify-content: space-between;
+        align-items: center;
+
+        max-width: 850px;
+
+        margin: 0 auto;
+
+        .balance-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            height: 160px;
+            max-width: 160px;
+
+            margin: 0 10px;
+
+            .balance-header {
+                color: $base-color;
+                
+                white-space: nowrap;
+            }
+
+            .balance {
+                margin-top: 10px;
+
+                font-size: 35px;
+                font-weight: bold;
+                color: $base-background-color;
+            }
+        }
+
+        #net-APY {
+            height: 160px;
+            width: 160px;
+
+            margin: 0;
+            border: 3px solid $ppnp-color;
+            border-radius: 50%;
+        }
+    }
+
+    #balance-wrapper-mobile {
+        // display: flex; Media query
+        justify-content: start;
+
+        padding: 0 24px;
+
+        #net-APY {
+            height: 120px;
+            width: 120px;
+
+            border: 3px solid $ppnp-color;
+            border-radius: 50%;
+
+            .balance {
+                font-size: 30px;
+            }
+        }
+
+        .boxes-wrapper-mobile {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            
+            height: 160px;
+
+            margin-left: 15px;
+
+            .balance-box {
+                align-items: flex-start;
+                
+                height: unset;
+
+                .balance {
+                    font-size: 30px;
+                }
+            }
+        }
+    }
+}
+
+
+
+@media (min-width: $bp-640-lower) {
+    .balance-container {
+        padding: 50px 0 118px; 
+
+        #balance-wrapper-mobile {
+            display: none;
+        }
+
+        #balance-wrapper-desktop {
+            display: flex;
+        }
+    }
+}
+
+@media (max-width: $bp-640-upper) {
+    .balance-container {
+        padding: 30px 0 118px; 
+
+        #balance-wrapper-mobile {
+            display: flex;
+        }
+
+        #balance-wrapper-desktop {
+            display: none;
+        }
+    }
+}
