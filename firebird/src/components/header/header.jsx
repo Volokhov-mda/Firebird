@@ -18,9 +18,7 @@ const useStyles = makeStyles((theme) => ({
         padding: "0 24px"
     },
     toolBar: {
-      marginTop: "34px",
       padding: 0,
-      paddingBottom: "15px",
       minHeight: 0,
       display: "flex",
       justifyContent: "space-between"
@@ -50,7 +48,7 @@ export default function Heaader() {
     return (
         <AppBar color="transparent" className={classes.header}>
         <Container className={classes.container}>
-            <Toolbar className={classes.toolBar}>
+            <Toolbar className={`${classes.toolBar} tool-bar`}>
                 <IconButton color="inherit" aria-label="menu" className={classes.logoButton}>
                     <Logo id="logo" width="52px" height="52px" />
                     {/* TODO: разобраться с anchorEl */}

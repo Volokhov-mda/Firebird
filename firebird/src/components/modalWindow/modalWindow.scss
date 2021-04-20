@@ -1,0 +1,41 @@
+@import "./../../variables.scss";
+
+.modal-window {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100vw;
+    height: 100vh;
+
+    background: rgba(0, 0, 0, .4);
+
+    z-index: 1;
+
+    .modal-window-content {
+        // width: 400px;
+        // height: 200px;
+
+        padding: 20px;
+
+        border-radius: 12px;
+        background: $base-background-color;
+    }
+}
+
+@media (min-width: $bp-640-lower) {
+    .modal-window-content {
+        max-width: 1000px;
+        // width: 1280px;
+    }
+}
+
+@media (max-width: $bp-640-upper) {
+    .modal-window-content {
+        width: 80%;
+    }
+}

@@ -1,8 +1,8 @@
-import { Grid, makeStyles, Paper, Switch } from "@material-ui/core";
+import { Box, Grid, makeStyles, Switch } from "@material-ui/core";
 import "./marketsLine.scss";
 
 const useStyles = makeStyles(() => ({
-    paper: {
+    box: {
         display: "flex",
         minWidth: 0,
         flexBasis: "80%",
@@ -28,16 +28,16 @@ export default function MarketsLine(props) {
     return (
         <Grid container spacing={0} alignItems="center">
             <Grid item xs={5} className={classes.gridItem}>
-                <Paper className={`${classes.paper} ${classes.firstItem}`}><span className="logo">{props.logo}</span> <p className={classes.text}>{props.asset}</p></Paper>
+                <Box className={`${classes.box} ${classes.firstItem}`}><span className="logo">{props.logo}</span> <p className={classes.text}>{props.asset}</p></Box>
             </Grid>
             <Grid item xs={2} className={classes.gridItem}>
-                <Paper className={classes.paper}>{props.apy}</Paper>
+                <Box className={classes.box}>{props.apy}</Box>
             </Grid>
             <Grid item xs={3} className={classes.gridItem}>
-                <Paper className={classes.paper}>{props.wallet}</Paper>
+                <Box className={classes.box}>{props.wallet}</Box>
             </Grid>
             <Grid item xs={2} className={classes.gridItem}>
-                <Paper className={classes.paper}><Switch color="primary"/></Paper>
+                <Box className={classes.box}><Switch color="primary" onClick={e => e.stopPropagation()} /></Box>
             </Grid>
         </Grid>
     );
