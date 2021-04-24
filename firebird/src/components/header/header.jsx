@@ -46,10 +46,10 @@ export default function Heaader() {
     const classes = useStyles();
 
     return (
-        <AppBar color="transparent" className={classes.header}>
+        <AppBar color="transparent" className={classes.header} aria-label="Навигация сайта">
         <Container className={classes.container}>
             <Toolbar className={`${classes.toolBar} tool-bar`}>
-                <IconButton color="inherit" aria-label="menu" className={classes.logoButton}>
+                <IconButton color="inherit" aria-label="Логотип сайта" className={classes.logoButton}>
                     <Logo id="logo" width="52px" height="52px" />
                     {/* TODO: разобраться с anchorEl */}
                     {/* <Menu
@@ -64,11 +64,11 @@ export default function Heaader() {
                     <MenuItem>Logout</MenuItem>
                     </Menu> */}
                 </IconButton>
-                <Box className="nav-buttons-wrapper">
+                <Box className="nav-buttons-wrapper" aria-label="Кнопки навигации">
                     <Button color="primary" variant="contained" className={classes.navButton}>Главная</Button>
                     <Button color="secondary" variant="outlined" className={classes.navButton}>Услуги</Button>
                 </Box>
-                <IconButton color="inherit" aria-label="menu" className={classes.menuButton}>
+                <IconButton color="inherit" aria-label="Меню" className={classes.menuButton}>
                     <MenuIcon id="menu-icon" width="52px" height="52px" />
                 </IconButton>
             </Toolbar>

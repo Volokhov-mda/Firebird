@@ -8,7 +8,7 @@
 
     margin-right: 10px;
     
-    svg {
+    svg, #logo { // TODO: убрать #logo (так как используется лого сайта).
         width: 40px;
         height: 40px;
     }
