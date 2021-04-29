@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import './header.scss';
 import { useState } from 'react';
+import { withStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -44,6 +45,17 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
+  const StyledMenuItem = withStyles((theme) => ({
+    root: {
+      '&:hover': {
+        backgroundColor: theme.palette.primary.main,
+        '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+          color: theme.palette.common.white,
+        },
+      },
+    },
+  }))(MenuItem);
+
 export default function Heaader() {
     const classes = useStyles();
 
@@ -81,9 +93,9 @@ export default function Heaader() {
                       open={Boolean(anchorEl)}
                       onClose={handleClose}
                     >
-                      <MenuItem onClick={handleClose}>Profile</MenuItem>
-                      <MenuItem onClick={handleClose}>My account</MenuItem>
-                      <MenuItem onClick={handleClose}>Logout</MenuItem>
+                      <StyledMenuItem onClick={undefined}>Profile</StyledMenuItem>
+                      <StyledMenuItem onClick={undefined}>My account</StyledMenuItem>
+                      <StyledMenuItem onClick={handleClose}>Logout</StyledMenuItem>
                     </Menu>
             </Toolbar>
         </Container>
