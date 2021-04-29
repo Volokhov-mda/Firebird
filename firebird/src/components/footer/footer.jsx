@@ -12,14 +12,14 @@ export default function Footer() {
                         <div className="footer-logo footer-header"><Logo /><span className="logo-text">irebird</span></div>
                     </a>
                 </div>
-                <div className="created footer-block" aria-label="Создали">
+                <div className="footer-block created" aria-label="Создали">
                     <div className="footer-header">Создали:</div>
                     <div className="footer-block-content">
                         <div className="creator"><a href="#">Волохов Никита</a></div>
                         <div className="creator"><a href="#">Крылов Павел</a></div>
                     </div>
                 </div>
-                <div className="open-sources footer-block" aria-label="Исходный код">
+                <div className="footer-block open-sources" aria-label="Исходный код">
                     <div className="footer-header"><span>Open-source:</span></div>
                     <div className="footer-block-content">
                         <a href="https://github.com/Volokhov-mda/Firebird">

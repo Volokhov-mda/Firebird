@@ -29,7 +29,7 @@ export default function MarketsLine(props) {
     return (
         <Grid container spacing={0} alignItems="center">
             <Grid item xs={5} className={classes.gridItem} aria-label={`Название ассета - ${props.asset}`}>
-                <Box className={`${classes.box} ${classes.firstItem}`}><span className="logo">{props.logo}</span> <p className={classes.text}>{props.asset}</p></Box>
+                <Box className={`${classes.box} ${classes.firstItem}`}><span className="logo-market">{props.logo}</span> <p className={classes.text}>{props.asset}</p></Box>
             </Grid>
             <Grid item xs={2} className={classes.gridItem} aria-label={`APY = ${props.apy}`}>
                 <Box className={classes.box}>{props.apy}</Box>

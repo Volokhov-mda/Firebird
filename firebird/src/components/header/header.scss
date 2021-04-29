@@ -1,23 +1,17 @@
 @import "./../../variables.scss";
 
-#logo {
+.logo {
   width: 52px;
   height: 52px;
 
   transition: 1s;
 
   .background {
-    fill: $base-color;
-
     transition: 1s;
-  }
-
-  .text {
-    fill: #fff;
   }
 }
 
-#logo:hover {
+.logo:hover {
   transform: rotate(90deg);
 
   .background {

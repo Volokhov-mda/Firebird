@@ -91,3 +91,31 @@
 
     }
 }
+
+@media (min-width: $bp-640-upper) {
+    .footer-content {
+        flex-direction: row;
+
+        .footer-block {
+            margin-bottom: 16px;
+        }
+    }
+}
+
+@media (max-width: $bp-640-lower) {
+    .footer-content {
+        flex-direction: column;
+
+        .footer-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            margin-bottom: 13px;
+
+            .creator {
+                text-align: center;
+            }
+        }
+    }
+}

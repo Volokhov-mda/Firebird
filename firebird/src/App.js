@@ -25,6 +25,12 @@ const data = {
       apy: "0.66%",
       wallet: "0 COMP",
       logo: <FirebirdIcon />
+    },
+    {
+      asset: "Firebird Coin 2",
+      apy: "0.66%",
+      wallet: "0 COMP",
+      logo: <FirebirdIcon />
     }
   ],
   borrowMarkets: [
@@ -36,6 +42,12 @@ const data = {
     },
     {
       asset: "Firebird Coin",
+      apy: "0.66%",
+      wallet: "0 COMP",
+      logo: <FirebirdIcon />
+    },
+    {
+      asset: "Firebird Coin 2",
       apy: "0.66%",
       wallet: "0 COMP",
       logo: <FirebirdIcon />
