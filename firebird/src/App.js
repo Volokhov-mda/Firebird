@@ -1,11 +1,12 @@
-import './App.scss';
-import Balance from './components/balance/balance';
 import Header from "./components/header/header.jsx";
-import Markets from "./components/markets/markets.jsx";
+import Main from "./components/main/main.jsx";
 import Footer from "./components/footer/footer.jsx";
+
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { ReactComponent as CompoundLogo } from "./media/icons/compound.svg";
 import { ReactComponent as FirebirdIcon } from "./media/logo/F.svg";
+import Welcome from "./components/welcome/welcome.jsx";
 
 const data = {
   balance: {
@@ -55,19 +56,18 @@ const data = {
   ]
 }
 
-function App() {
+export default function Aoo() {
 
   return (
-    <div className="App">
-      <Header />
-      <Balance supplyBalance={data.balance.supply} borrowBalance={data.balance.borrow} netAPY={data.balance.netAPY}/>
-      <div className="markets-container">
-        <Markets marketsName="Supply" markets={data.supplyMarkets} ariaLabel="Рынок предложения (Supply market)" />
-        <Markets marketsName="Borrow" markets={data.borrowMarkets} ariaLabel="Рынок займов (Borrow market)" />
-      </div>
-      <Footer />
+    <div className="Main">
+      <Router>
+        <Header />
+        <Switch>
+          <Route exact path="/"><Welcome /></Route>
+          <Route path="/app"><Main data={data} /></Route>
+        </Switch>
+        <Footer />
+      </Router>
     </div>
   );
 }
-
-export default App;

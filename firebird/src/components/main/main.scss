@@ -1,4 +1,4 @@
-@import "./variables.scss";
+@import "./../../variables.scss";
 
 .markets-container {
   display: flex;
@@ -8,8 +8,6 @@
   margin: 0 auto 50px;
   margin-bottom: 50px;
 }
-
-
 
 @media (min-width: $bp-640-lower) {
   .markets-container {

@@ -29,6 +29,10 @@
   }
 }
 
+.nav-link {
+  text-decoration: none;
+}
+
 @media (min-width: $bp-640-lower) {
   .tool-bar {
     margin-top: 34px;

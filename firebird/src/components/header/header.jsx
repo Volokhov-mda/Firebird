@@ -3,6 +3,8 @@ import { ReactComponent as MenuIcon } from "./../../media/icons/menu.svg";
 import { AppBar, Box, Button, IconButton, Container, Toolbar, Menu, MenuItem } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 
+import { Switch, Route, Link } from "react-router-dom";
+
 import './header.scss';
 import { useState } from 'react';
 import { withStyles } from '@material-ui/styles';
@@ -35,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
       padding: 0
     },
     navButton: {
-      width: "112px",
+      width: "130px",
       height: "53px",
       marginLeft: theme.spacing(1.5),
       marginRight: theme.spacing(1.5),
@@ -57,8 +59,9 @@ const useStyles = makeStyles((theme) => ({
   }))(MenuItem);
 
 export default function Heaader() {
-    const classes = useStyles();
+    const pathName = window.location.pathname;
 
+    const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
@@ -77,8 +80,27 @@ export default function Heaader() {
                     <Logo className="logo" width="52px" height="52px" />
                 </IconButton>
                 <Box className="nav-buttons-wrapper" aria-label="Кнопки навигации">
-                    <Button color="primary" variant="contained" className={classes.navButton}>Главная</Button>
-                    <Button color="secondary" variant="outlined" className={classes.navButton}>Услуги</Button>
+                  <Switch>
+
+                    <Route exact path="/">
+                      <Link to="/" className="nav-link">
+                        <Button color="primary" variant="contained" className={classes.navButton}>Главная</Button>
+                      </Link>
+                      <Link to="/app" className="nav-link">                    
+                        <Button color="secondary" variant="outlined" className={classes.navButton}>Приложение</Button>
+                      </Link>
+                    </Route>
+
+                    <Route path="/app">
+                      <Link to="/" className="nav-link">
+                        <Button color="secondary" variant="outlined" className={classes.navButton}>Главная</Button>
+                      </Link>
+                      <Link to="/app" className="nav-link">                    
+                        <Button color="primary" variant="contained" className={classes.navButton}>Приложение</Button>
+                      </Link>
+                    </Route>
+
+                  </Switch>
                 </Box>
                 <IconButton color="inherit" aria-label="Меню" className={classes.menuButton} onClick={handleClick}>
                     <MenuIcon id="menu-icon" width="52px" height="52px" />
@@ -93,10 +115,10 @@ export default function Heaader() {
                       open={Boolean(anchorEl)}
                       onClose={handleClose}
                     >
-                      <StyledMenuItem onClick={undefined}>Profile</StyledMenuItem>
-                      <StyledMenuItem onClick={undefined}>My account</StyledMenuItem>
-                      <StyledMenuItem onClick={handleClose}>Logout</StyledMenuItem>
-                    </Menu>
+                    <StyledMenuItem onClick={undefined}>Profile</StyledMenuItem>
+                    <StyledMenuItem onClick={undefined}>My account</StyledMenuItem>
+                    <StyledMenuItem onClick={handleClose}>Logout</StyledMenuItem>
+                </Menu>
             </Toolbar>
         </Container>
         </AppBar>
