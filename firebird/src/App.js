@@ -9,9 +9,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { IntlProvider } from "react-intl";
 
-import { ReactComponent as CompoundLogo } from "./media/icons/compound.svg";
-import { ReactComponent as FirebirdIcon } from "./media/logo/F.svg";
 import Welcome from "./components/welcome/welcome.jsx";
+import Loader from "./components/loader/loader.jsx";
 
 const data = {
   user: {
@@ -70,6 +69,7 @@ const textLocals = {
     // HEADER
     homeNavButton: "Главная",
     appNavButton: "Приложение",
+    connectWallet: "Подключить кошелек",
 
     // BALANCE
     supplyBalance: "Баланс предложения",
@@ -79,6 +79,11 @@ const textLocals = {
     // MARKETS
     supplyMarket: "Рынок предложения",
     borrowMarket: "Рынок займа",
+    moreAboutCoin: "Подробнее о валюте...",
+    supply: "Предоставить валюту",
+    withdraw: "Вывести валюту",
+    borrow: "Занять валюту",
+    repay: "Отдать долг",
 
     // COIN INFO
     backButton: "← Назад",
@@ -92,15 +97,21 @@ const textLocals = {
     // HEADER
     homeNavButton: "Home",
     appNavButton: "App",
+    connectWallet: "Connect wallet",
 
     // BALANCE
     supplyBalance: "Supply Balance",
     netAPY: "Net APY",
     borrowBalance: "Borrow Balance",
+    supply: "Supply",
+    withdraw: "Withdraw",
+    borrow: "Borrow",
+    repay: "Repay",
 
     // MARKETS
     supplyMarket: "Supply markets",
     borrowMarket: "Borrow markets",
+    moreAboutCoin: "More about coin...",
 
     // COIN INFO
     backButton: "← Back",
@@ -114,6 +125,9 @@ const textLocals = {
 
 export default function App() {
   const [locale, setLocale] = useState("ru");
+
+  // storageContract.methods.retrieve().call((e, r) => { console.log(r) });
+  // storageContract.methods.store(1).send({ from: window.wallet }, (e, r) => {  });
 
   return (
     <div className="Main">
@@ -132,7 +146,10 @@ export default function App() {
           })}
 
           <Route>
-            <div style={{"color": "#000"}}>404</div>
+            <div style={{"color": "#000"}}>
+              404
+              <Loader width="200" height="200" />
+            </div>
           </Route>
         </Switch>
         <Footer locale={locale} />

@@ -93,6 +93,64 @@
             }
         }
     }
+
+    .borrow-limit-wrapper {
+        display: flex;
+        align-items: center;
+
+        max-width: 960px;
+
+        padding: 0 24px;
+        margin: 40px auto 0;
+
+        .borrow-limit-header {
+            margin-right: 10px;
+
+            color: #787878;
+
+            white-space: nowrap;
+
+            #borrow-limit {
+                color: #fff;
+            }
+        }
+        
+        .borrow-limit-visualization {
+            position: relative;
+
+            width: 100%;
+            height: 2px;
+
+            background: #787878;
+            
+            .current-borrow-limit {
+                position: absolute;
+
+                top: 0;
+                left: 0;
+
+                width: 50%;
+                height: 2px;
+
+                background: $ppnp-color;
+            }
+
+            .current-borrow-limit::before {
+                content: "";
+                position: absolute;
+
+                top: -2px;
+                right: -2px;
+
+                width: 6px;
+                height: 6px;
+
+                border-radius: 50%;
+
+                background: #fff;
+            }
+        }
+    }
 }
 
 

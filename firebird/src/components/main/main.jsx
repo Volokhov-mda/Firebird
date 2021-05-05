@@ -18,8 +18,8 @@ export default function Main(props, locale) {
         <div className="app">
             <Balance supplyBalance={props.data.user.supply} borrowBalance={props.data.user.borrow} netAPY={props.data.user.netAPY} locale={locale} />
             <div className="markets-container">
-                <Markets isSupply={true} marketsName={supplyMarketName} markets={props.data.markets} ariaLabel="Рынок предложения (Supply market)" />
-                <Markets isSupply={false} marketsName={borrowMarketName} markets={props.data.markets} ariaLabel="Рынок займов (Borrow market)" />
+                <Markets isSupply={true} marketsName={supplyMarketName} markets={props.data.markets} locale={locale} ariaLabel="Рынок предложения (Supply market)" />
+                <Markets isSupply={false} marketsName={borrowMarketName} markets={props.data.markets} locale={locale} ariaLabel="Рынок займов (Borrow market)" />
             </div>
         </div>
     )

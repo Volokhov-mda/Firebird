@@ -1,5 +1,4 @@
 import { ReactComponent as Logo } from './../../media/logo/F.svg';
-import { ReactComponent as MenuIcon } from "./../../media/icons/menu.svg";
 import { AppBar, Box, Button, IconButton, Container, Toolbar, Menu, MenuItem } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -7,9 +6,20 @@ import { Switch, Route, Link } from "react-router-dom";
 
 import { FormattedMessage } from "react-intl";
 
+import { storageContractABI, storageContractAdress } from "./../../contract.js";
+
+import { ReactComponent as CancelIcon } from "../../media/icons/cancel.svg";
+
 import './header.scss';
 import { useState } from 'react';
 import { withStyles } from '@material-ui/styles';
+
+import Web3 from 'web3';
+
+import ModalWindow from '../modalWindow/modalWindow';
+import Loader from '../loader/loader';
+import { resolve } from 'q';
+// import LoaderWindow from '../loaderWindow/loaderWindow';
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -19,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
       boxShadow: "none",
       paddingRight: "0 !important",
       paddingBottom: "20px",
-      zIndex: "0"
+      zIndex: "1"
     },
     container: {
       // Внимание, говнокод. Бесполезный блок, плохо считается max-width.
@@ -31,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
       minHeight: 0,
       display: "flex",
       justifyContent: "space-between"
+    },
+    logoButtonWrapper: {
+      width: "120px"
     },
     logoButton: {
       marginRight: theme.spacing(1),
@@ -48,6 +61,12 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: "bold",
       borderWidth: "2px",
       borderRadius: "35px"
+    },
+    connectButton: {
+      fontSize: "10px",
+      height: "53px",
+      width: "100%",
+      padding: "0",
     }
   }));
 
@@ -88,6 +107,8 @@ function NavButtons(props, locale) {
 export default function Heaader(props, locale) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
+    const [loaderActive, setLoaderActive] = useState(false);
+    const [wallet, setWallet] = useState(undefined);
 
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
@@ -98,22 +119,53 @@ export default function Heaader(props, locale) {
     };
 
     const handleChange = (event) => {
-      props.setLocale(event.target.value);
+      props.setLocale(props.locale === "ru" ? "en" : "ru");
     }
-  
+
+    const formatWallet = (wallet) => {
+      return wallet.substring(0, 6) + "..." + wallet.substring(wallet.length - 3);
+    }
+
+    const handleConnection = () => {
+      if (typeof window.web3 !== 'undefined') {
+        window.web3 = new Web3(Web3.givenProvider);
+        console.log("Дед жив");
+      } else {
+        alert("Подключите MetaMask");
+      }
+
+      window.web3.eth.getAccounts((error, result) => {
+          if (error) {
+              console.log(error);
+          } else {
+              resolve(result);
+          }
+      }).then(result => { setWallet(result[0]); window.wallet = result[0]; window.storageContract = new window.web3.eth.Contract(storageContractABI, storageContractAdress); setLoaderActive(false); });
+    }
 
     return (
         <AppBar color="transparent" className={classes.header} aria-label="Навигация сайта">
         <Container className={classes.container}>
             <Toolbar className={`${classes.toolBar} tool-bar`}>
-                <Route>
-                  <Link to="/">
-                    <IconButton color="inherit" aria-label="Логотип сайта" className={classes.logoButton}>
-                      <Logo className="logo" width="52px" height="52px" />
-                    </IconButton>
-                  </Link>
-                </Route>
+              <div className="logo-wrapper header-item">
+                <div className="logo-switcher-wrapper">
+                  <Route>
+                    <Link to="/" className={classes.logoButtonWrapper}>
+                      <IconButton color="inherit" aria-label="Логотип сайта" className={`${classes.logoButton}`}>
+                        <Logo className="logo" width="52px" height="52px" />
+                      </IconButton>
+                    </Link>
+                    <div>
+                      <Button color="primary" className="locale-switch" onClick={handleChange}>
+                        {props.locale === "ru" ? "рус" : "en"}
+                      </Button>
+                    </div>
+                  </Route>
+                </div>
+              </div>
 
+
+              <div className="header-item">
                 <Box className="nav-buttons-wrapper" aria-label="Кнопки навигации">
                   <Switch>
                     <NavButtons exact={true} path="/app" isFirstActive={false} isSecondActive={true} locale={locale} styles={classes.navButton} />
@@ -121,30 +173,33 @@ export default function Heaader(props, locale) {
                     <NavButtons exact={false} path={null} isFirstActive={false} isSecondActive={false} locale={locale} styles={classes.navButton} />
                   </Switch>
                 </Box>
+              </div>
 
-                <IconButton color="inherit" aria-label="Меню" className={classes.menuButton} onClick={handleClick}>
-                    <MenuIcon id="menu-icon" width="52px" height="52px" />
-                </IconButton>
-                <Menu
-                      id="simple-menu"
-                      anchorEl={anchorEl}
-                      getContentAnchorEl={null}
-                      anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                      transformOrigin={{ vertical: "top", horizontal: "center" }}
-                      keepMounted
-                      open={Boolean(anchorEl)}
-                      onClose={handleClose}
-                    >
-                    <StyledMenuItem onClick={undefined}>Profile</StyledMenuItem>
-                    <StyledMenuItem onClick={undefined}>My account</StyledMenuItem>
-                    <StyledMenuItem onClick={handleClose}>Logout</StyledMenuItem>
-                </Menu>
+              <div className="header-item connect-button-wrapper">
+                <Button color="primary" className={`${classes.connectButton} connect-button`} onClick={() => {setLoaderActive(true); handleConnection();}}>
+                  {wallet 
+                  ? <span className="wallet">{formatWallet(wallet)}</span>
+                  : <FormattedMessage
+                      id="connectWallet"
+                      defaultMessage="sample text"
+                      value={{locale}} />
+                  }
+                </Button>
+              </div>
 
-                <select style={{"width": "52px"}} onChange={handleChange} aria-label="Выбор языка">
-                  {["ru", "en"].map((loc) => {
-                    return <option key={loc}>{loc}</option>
-                  })}
-                </select>
+              {loaderActive ? 
+                <ModalWindow setActive={setLoaderActive}>
+                  <div className="modal-header-wrapper">
+                      <div className="modal-header">
+                          <span className="header">Loading...</span>
+                          <button className="cancel-button" onClick={() => setLoaderActive(false)}><CancelIcon className="cancel-icon" /></button>
+                      </div>
+                  </div>
+                  <div className="loader-wrapper">
+                    <Loader width="100" height="100" />
+                  </div>
+                </ModalWindow>
+                : null}
             </Toolbar>
         </Container>
         </AppBar>

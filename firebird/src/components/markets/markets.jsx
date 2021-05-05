@@ -6,6 +6,10 @@ import ModalWindow from "../modalWindow/modalWindow";
 
 import "./markets.scss";
 
+import { FormattedMessage } from "react-intl";
+
+import InlineSVG from 'svg-inline-react';
+
 import { ReactComponent as CancelIcon } from "../../media/icons/cancel.svg";
 import { Link } from "react-router-dom";
 
@@ -25,7 +29,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default function Markets(props) {
+export default function Markets(props, locale) {
     const classes = useStyles();
     const [modalWindowActive, setModalWindowActive] = useState(false);
     const [firstTabActive, setFirstTabActive] = useState(true);
@@ -69,20 +73,46 @@ export default function Markets(props) {
             ? <ModalWindow active={modalWindowActive} setActive={setModalWindowActive} asset={pressedAsset.asset}>
                 <div className="modal-header-wrapper">
                     <div className="modal-header">
-                        <span className="selected-market-icon">{pressedAsset.logo}</span> <span className="selected-market-name">{pressedAsset.asset}</span>
-                        <button id="cancel-button" onClick={() => setModalWindowActive(false)}><CancelIcon id="cancel-icon" /></button>
+                        <span className="selected-market-icon"><InlineSVG src={pressedAsset.logo} /></span> 
+                        <span className="selected-market-name">{pressedAsset.asset}</span>
+                        <button className="cancel-button" onClick={() => setModalWindowActive(false)}><CancelIcon className="cancel-icon" /></button>
                     </div>
-                    <div className="modal-coin-info"><Link to={`/${pressedAsset.link}`}>Подробнее о валюте...</Link></div>
+                    <div className="modal-coin-info">
+                        <Link to={`/${pressedAsset.link}`}>
+                            <FormattedMessage
+                                id="moreAboutCoin"
+                                defaultMessage="sample text"
+                                value={{locale}} />
+                        </Link>
+                    </div>
                 </div>
                 <div className="tab-wrapper" aria-label={`Переключение вкладок ${props.marketsName} и Repay`}> 
                     <div className={`tab ${firstTabActive ? "active" : ""}`} onClick={() => setFirstTabActive(true)} 
                         aria-label={`Вкладка ${props.marketsName}` + (firstTabActive ? ", активна" : "")}>
-                        {props.marketsName}
+                        {props.isSupply
+                            ?  <FormattedMessage
+                                    id="supply"
+                                    defaultMessage="sample text"
+                                    value={{locale}} />
+                            : <FormattedMessage
+                                    id="borrow"
+                                    defaultMessage="sample text"
+                                    value={{locale}} />
+                        }
                     </div>
                     
                     <div className={`tab ${!firstTabActive ? "active" : ""}`} onClick={() => setFirstTabActive(false)}
                         ariaLabel={"Вкладка Repay" + (!firstTabActive ? ", активна" : "")}>
-                        Repay
+                                                {props.isSupply
+                            ?  <FormattedMessage
+                                    id="withdraw"
+                                    defaultMessage="sample text"
+                                    value={{locale}} />
+                            : <FormattedMessage
+                                    id="repay"
+                                    defaultMessage="sample text"
+                                    value={{locale}} />
+                        }
                     </div>
                 </div>
                 <div className="tab-content" aria-label={"Содержимое вкладки " + (firstTabActive ? "Borrow" : "Repay")}>

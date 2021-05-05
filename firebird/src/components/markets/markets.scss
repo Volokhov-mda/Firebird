@@ -96,6 +96,8 @@
 
         border-bottom: 1px solid rgba(0, 0, 0, 0.07);
 
+        z-index: 1;
+
         .modal-header {
             display: flex;
             flex-direction: row;
@@ -117,7 +119,7 @@
             }
             
         
-            #cancel-button {
+            .cancel-button {
                 position: absolute;
 
                 top: calc(50% - 15px / 2);
@@ -133,7 +135,7 @@
         
                 cursor: pointer;
         
-                #cancel-icon {
+                .cancel-icon {
                     width: 15px;
                     height: 15px;
                 }

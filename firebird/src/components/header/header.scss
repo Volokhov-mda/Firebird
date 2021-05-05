@@ -33,6 +33,102 @@
   text-decoration: none;
 }
 
+.logo-wrapper,
+.connect-button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  width: 120px;
+  height: 80px;
+
+  .wallet {
+    font-size: 16px;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+  }
+}
+
+.logo-wrapper .locale-switch {
+    width: 52px;
+    min-width: 52px;
+    
+    margin-top: 5px;
+    padding: 0;
+    border: none;
+    
+    background: none;
+    color: $base-color;
+
+    text-align: center;
+    text-transform: uppercase;
+
+    cursor: pointer;
+}
+
+.header-item {
+  height: 80px;
+}
+
+.logo-button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+// Modal window styles
+.modal-header-wrapper {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 8px 15px;
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+
+  .modal-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      .header {
+        color: #000;
+      }
+  
+      .cancel-button {
+          position: absolute;
+
+          top: calc(50% - 15px / 2);
+          right: 15px; // As .modal-header's padding.
+
+          width: 20px;
+          height: 20px;
+          
+          padding: 0;
+          border: 0;
+  
+          background: none;
+  
+          cursor: pointer;
+  
+          .cancel-icon {
+              width: 15px;
+              height: 15px;
+          }
+      }
+  }
+}
+
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+
+  padding: 20px 0;
+}
+
 @media (min-width: $bp-640-lower) {
   .tool-bar {
     margin-top: 34px;
