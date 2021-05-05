@@ -1,9 +1,11 @@
 import "./footer.scss";
 
+import { FormattedMessage } from "react-intl";
+
 import { ReactComponent as Logo } from "./../../media/logo/F.svg";
 import { ReactComponent as GitHubLogo } from "./../../media/icons/GitHub.svg";
 
-export default function Footer() {
+export default function Footer(props, locale) {
     return (
         <div id="footer" aria-label="Подвал сайта">
             <div className="footer-content">
@@ -13,10 +15,25 @@ export default function Footer() {
                     </a>
                 </div>
                 <div className="footer-block created" aria-label="Создали">
-                    <div className="footer-header">Создали:</div>
+                    <div className="footer-header">
+                        <FormattedMessage
+                            id="createdBy"
+                            defaultMessage="sample text"
+                            value={{locale}} />
+                    </div>
                     <div className="footer-block-content">
-                        <div className="creator"><a href="#">Волохов Никита</a></div>
-                        <div className="creator"><a href="#">Крылов Павел</a></div>
+                        <div className="creator"><a href="#">
+                            <FormattedMessage
+                                id="author1"
+                                defaultMessage="sample text"
+                                value={{locale}} />
+                        </a></div>
+                        <div className="creator"><a href="#">
+                            <FormattedMessage
+                                id="author2"
+                                defaultMessage="sample text"
+                                value={{locale}} />
+                        </a></div>
                     </div>
                 </div>
                 <div className="footer-block open-sources" aria-label="Исходный код">

@@ -20,5 +20,6 @@
 @media (max-width: $bp-640-upper) {
   .markets-container {
     flex-direction: column;
+    margin-bottom: 0;
   }
 }

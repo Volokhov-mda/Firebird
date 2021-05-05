@@ -1,22 +1,8 @@
-import { Box, Grid, makeStyles, Switch } from "@material-ui/core";
+import { Grid, makeStyles, Switch } from "@material-ui/core";
+import InlineSVG from 'svg-inline-react';
 import "./marketsLine.scss";
 
 const useStyles = makeStyles(() => ({
-    box: {
-        display: "flex",
-        minWidth: 0,
-        flexBasis: "80%",
-        justifyContent: "flex-end",
-        alignItems: "center",
-        boxShadow: "none",
-        textAlign: "end",
-        whiteSpace: "nowrap"
-    },
-    text: {
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-        textOverflow: "ellipsis"
-    },
     firstItem: {
         justifyContent: "flex-start",
         textAlign: "start"
@@ -25,20 +11,24 @@ const useStyles = makeStyles(() => ({
 
 export default function MarketsLine(props) {
     const classes = useStyles();
+    const windowWidth = window.innerWidth;
 
     return (
-        <Grid container spacing={0} alignItems="center">
-            <Grid item xs={5} className={classes.gridItem} aria-label={`Название ассета - ${props.asset}`}>
-                <Box className={`${classes.box} ${classes.firstItem}`}><span className="logo-market">{props.logo}</span> <p className={classes.text}>{props.asset}</p></Box>
+        <Grid container spacing={0} alignItems="center" className="grid-container">
+            <Grid item xs={windowWidth > 400 ? 5 : 4} className="market-cell" aria-label={`Название ассета - ${props.asset}`}>
+                <div className="asset-wrapper">
+                    <span className="logo-market"><InlineSVG className="logo" src={props.logo} /></span>
+                    <p className={`asset-name`}>{props.asset}</p>
+                </div>
             </Grid>
-            <Grid item xs={2} className={classes.gridItem} aria-label={`APY = ${props.apy}`}>
-                <Box className={classes.box}>{props.apy}</Box>
+            <Grid item xs={windowWidth > 400 ? 2 : 0} className="market-cell apy-market" aria-label={`APY = ${props.apy}`}>
+                <div>{props.apy}</div>
             </Grid>
-            <Grid item xs={3} className={classes.gridItem} aria-label={`Кошелек - ${props.wallet}`}> {/* TODO: Кошелек? */}
-                <Box className={classes.box}>{props.wallet}</Box>
+            <Grid item xs={windowWidth > 400 ? 3 : 4} className="market-cell" aria-label={`Кошелек - ${props.wallet}`}> {/* TODO: Кошелек? */}
+                <div>{props.wallet}</div>
             </Grid>
-            <Grid item xs={2} className={classes.gridItem} aria-label={`Флажок collateral`}> {/* TODO: Collateral? */}
-                <Box className={classes.box}><Switch color="primary" onClick={e => e.stopPropagation()} /></Box>
+            <Grid item xs={windowWidth > 400 ? 2 : 4} className="market-cell" aria-label={`Флажок collateral`}> {/* TODO: Collateral? */}
+                <div><Switch color="primary" onClick={e => e.stopPropagation()} /></div>
             </Grid>
         </Grid>
     );

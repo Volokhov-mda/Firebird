@@ -21,9 +21,6 @@
             justify-content: center;
             align-items: center;
 
-            height: 160px;
-            max-width: 160px;
-
             margin: 0 10px;
 
             .balance-header {
@@ -42,9 +39,6 @@
         }
 
         #net-APY {
-            height: 160px;
-            width: 160px;
-
             margin: 0;
             border: 3px solid $ppnp-color;
             border-radius: 50%;
@@ -60,9 +54,15 @@
         #net-APY {
             height: 120px;
             width: 120px;
+            min-width: 120px;
 
             border: 3px solid $ppnp-color;
             border-radius: 50%;
+
+            .balance-header {
+                text-align: center;
+                white-space: normal;
+            }
 
             .balance {
                 font-size: 30px;
@@ -83,6 +83,10 @@
                 
                 height: unset;
 
+                .balance-header {
+                    white-space: normal;
+                }    
+
                 .balance {
                     font-size: 30px;
                 }
@@ -95,7 +99,7 @@
 
 @media (min-width: $bp-640-lower) {
     .balance-container {
-        padding: 80px 20px 148px; 
+        padding: 60px 20px 148px; 
 
         #balance-wrapper-mobile {
             display: none;
@@ -105,11 +109,17 @@
             display: flex;
         }
     }
+
+    .balance-box {
+        height: 170px;
+        min-width: 170px;
+        max-width: 170px;
+    }
 }
 
 @media (max-width: $bp-640-upper) {
     .balance-container {
-        padding: 30px 0 118px; 
+        padding: 10px 0 118px; 
 
         #balance-wrapper-mobile {
             display: flex;

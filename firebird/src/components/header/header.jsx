@@ -5,22 +5,26 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { Switch, Route, Link } from "react-router-dom";
 
+import { FormattedMessage } from "react-intl";
+
 import './header.scss';
 import { useState } from 'react';
 import { withStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
     header: {
-        position: "relative",
-        flexGrow: 1,
-        backgroundColor: "#0a0d15",
-        boxShadow: "none",
-        paddingRight: "0 !important"
+      position: "relative",
+      flexGrow: 1,
+      backgroundColor: "#0a0d15",
+      boxShadow: "none",
+      paddingRight: "0 !important",
+      paddingBottom: "20px",
+      zIndex: "0"
     },
     container: {
-        // Внимание, говнокод. Бесполезный блок, плохо считается max-width.
-        maxWidth: "calc(1280px + 24px * 2)",
-        padding: "0 24px"
+      // Внимание, говнокод. Бесполезный блок, плохо считается max-width.
+      maxWidth: "calc(1280px + 24px * 2)",
+      padding: "0 24px"
     },
     toolBar: {
       padding: 0,
@@ -47,20 +51,41 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-  const StyledMenuItem = withStyles((theme) => ({
-    root: {
-      '&:hover': {
-        backgroundColor: theme.palette.primary.main,
-        '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-          color: theme.palette.common.white,
-        },
+const StyledMenuItem = withStyles((theme) => ({
+  root: {
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main,
+      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+        color: theme.palette.common.white,
       },
     },
-  }))(MenuItem);
+  },
+}))(MenuItem);
 
-export default function Heaader() {
-    const pathName = window.location.pathname;
+function NavButtons(props, locale) {
+  return (
+    <Route exact={props.exact} path={props.path}>
+      <Link to="/" className="nav-link">
+        <Button color={props.isFirstActive ? "primary" : "secondary"} variant={props.isFirstActive ? "contained" : "outlined"} className={props.styles}>
+          <FormattedMessage
+              id="homeNavButton"
+              defaultMessage="sample text"
+              value={{locale}} />
+        </Button>
+      </Link>
+      <Link to="/app" className="nav-link">                    
+        <Button color={props.isSecondActive ? "primary" : "secondary"} variant={props.isSecondActive ? "contained" : "outlined"} className={props.styles}>
+          <FormattedMessage
+              id="appNavButton"
+              defaultMessage="sample text"
+              value={{locale}} />
+        </Button>
+      </Link>
+    </Route>
+  );
+}
 
+export default function Heaader(props, locale) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -72,36 +97,31 @@ export default function Heaader() {
       setAnchorEl(null);
     };
 
+    const handleChange = (event) => {
+      props.setLocale(event.target.value);
+    }
+  
+
     return (
         <AppBar color="transparent" className={classes.header} aria-label="Навигация сайта">
         <Container className={classes.container}>
             <Toolbar className={`${classes.toolBar} tool-bar`}>
-                <IconButton color="inherit" aria-label="Логотип сайта" className={classes.logoButton}>
-                    <Logo className="logo" width="52px" height="52px" />
-                </IconButton>
+                <Route>
+                  <Link to="/">
+                    <IconButton color="inherit" aria-label="Логотип сайта" className={classes.logoButton}>
+                      <Logo className="logo" width="52px" height="52px" />
+                    </IconButton>
+                  </Link>
+                </Route>
+
                 <Box className="nav-buttons-wrapper" aria-label="Кнопки навигации">
                   <Switch>
-
-                    <Route exact path="/">
-                      <Link to="/" className="nav-link">
-                        <Button color="primary" variant="contained" className={classes.navButton}>Главная</Button>
-                      </Link>
-                      <Link to="/app" className="nav-link">                    
-                        <Button color="secondary" variant="outlined" className={classes.navButton}>Приложение</Button>
-                      </Link>
-                    </Route>
-
-                    <Route path="/app">
-                      <Link to="/" className="nav-link">
-                        <Button color="secondary" variant="outlined" className={classes.navButton}>Главная</Button>
-                      </Link>
-                      <Link to="/app" className="nav-link">                    
-                        <Button color="primary" variant="contained" className={classes.navButton}>Приложение</Button>
-                      </Link>
-                    </Route>
-
+                    <NavButtons exact={true} path="/app" isFirstActive={false} isSecondActive={true} locale={locale} styles={classes.navButton} />
+                    <NavButtons exact={true} path="/" isFirstActive={true} isSecondActive={false} locale={locale} styles={classes.navButton} />
+                    <NavButtons exact={false} path={null} isFirstActive={false} isSecondActive={false} locale={locale} styles={classes.navButton} />
                   </Switch>
                 </Box>
+
                 <IconButton color="inherit" aria-label="Меню" className={classes.menuButton} onClick={handleClick}>
                     <MenuIcon id="menu-icon" width="52px" height="52px" />
                 </IconButton>
@@ -119,6 +139,12 @@ export default function Heaader() {
                     <StyledMenuItem onClick={undefined}>My account</StyledMenuItem>
                     <StyledMenuItem onClick={handleClose}>Logout</StyledMenuItem>
                 </Menu>
+
+                <select style={{"width": "52px"}} onChange={handleChange} aria-label="Выбор языка">
+                  {["ru", "en"].map((loc) => {
+                    return <option key={loc}>{loc}</option>
+                  })}
+                </select>
             </Toolbar>
         </Container>
         </AppBar>
