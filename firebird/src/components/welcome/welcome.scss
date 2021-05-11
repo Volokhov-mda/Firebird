@@ -1,12 +1,75 @@
 @import "./../../variables.scss";
 
 .welcome-wrapper {
-    max-width: 1280px;
+    // max-width: 1280px;
+    width: 100%;
 
     margin: 0 auto;
-    // padding: 0 24px;
 
     text-align: center;
 
     color: #000;
+
+    .welcome-header {
+        width: 100%;
+
+        margin: 20px 0;
+
+        font-weight: bold;
+
+        text-align: center;
+    }
+
+    .try-now {
+        width: 100%;
+
+        padding: 30px 0;
+
+        background: $base-background-color-top;
+        color: #f9f9f9;
+
+        .try-now-container {
+            max-width: 1280px;
+
+            margin: 0 auto;
+
+            .try-now-header {
+                margin-bottom: 10px;
+    
+                font-size: 30px;
+            }
+    
+            a {
+                text-decoration: none;
+    
+                .try-now-button {
+                    width: 250px;
+                    height: 53px;
+        
+                    font-weight: bold;
+        
+                    border-radius: 35px;
+                }
+            }
+        }
+    }
+}
+
+
+@media (min-width: $bp-640-lower) {
+    .welcome-header {
+        font-size: 50px;
+    }
+}
+
+@media (max-width: $bp-640-upper) {
+    .welcome-header {
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 400px) {
+    .welcome-header {
+        font-size: 30px;
+    }
 }

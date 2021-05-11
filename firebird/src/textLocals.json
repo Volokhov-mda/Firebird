@@ -24,7 +24,10 @@
         "author2": "Крылов Павел",
 
         "loading": "Загрузка...",
-        "loading-subtitle": "Возможно, вам необходимо подключить"
+        "loading-subtitle": "Возможно, вам необходимо подключить",
+
+        "tryNow": "Попробовать сейчас!",
+        "goToApp": "Перейти в приложение"
     },
     "en": {
         "homeNavButton": "Home",
@@ -51,6 +54,9 @@
         "author2": "Krylov Pavel",
 
         "loading": "Loading...",
-        "loading-subtitle": "You may need to enable"
+        "loading-subtitle": "You may need to enable",
+
+        "tryNow": "Try now!",
+        "goToApp": "Go to App"
     }
 }

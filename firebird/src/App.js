@@ -80,7 +80,7 @@ export default function App() {
       <Router>
         <Header locale={locale} setLocale={setLocale} />
         <Switch>
-          <Route exact path="/"><Welcome /></Route>
+          <Route exact path="/"><Welcome locale={locale} /></Route>
           <Route exaxt path="/app"><Main data={data} locale={locale} /></Route>
           {data.markets.map(market => {
             return (

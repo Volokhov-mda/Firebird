@@ -1,28 +1,67 @@
 @import "./../../variables.scss";
 
-.welcome-block {
-    display: "flex";
+.welcome-block-desktop,
+.welcome-block-mobile {
+    width: 100%;
 
-    // height: 300px;
-
-    .image-block {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        padding: 10px 0;
-        
-        // background: lightpink;
-
-        svg {
-            width: 50%;
-            height: auto;
+    .welcome-block {
+        max-width: 1280px;
+    
+        margin: 0 auto;
+    
+        .image-block {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+    
+            padding: 10px 0;
+    
+            svg {
+                width: 50%;
+                height: auto;
+            }
+    
+            .image-picture {
+                width: 65%;
+            }
         }
+    }
+}
+
+.welcome-block-mobile {
+    flex-direction: column;
+}
+
+
+@media (min-width: $bp-640-lower) {
+    .welcome-block-desktop {
+        display: flex !important;
+    }
+
+    .welcome-block-mobile {
+        display: none;
     }
 
     .text-block {
         padding: 30px 0;
 
-        // background: lightgray;
+        font-size: 24px;
     }
+}
+
+@media (max-width: $bp-640-upper) {
+    .welcome-block-desktop {
+        display: none !important;
+    }
+
+    .welcome-block-mobile {
+        display: flex;
+        
+        .text-block {
+            padding: 30px 24px;
+    
+            font-size: 24px;
+        }
+    }
+
 }

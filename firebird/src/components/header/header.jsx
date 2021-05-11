@@ -1,5 +1,5 @@
 import { ReactComponent as Logo } from './../../media/logo/F.svg';
-import { AppBar, Box, Button, IconButton, Container, Toolbar } from '@material-ui/core';
+import { AppBar, Box, Button, IconButton, Container, Toolbar, MenuItem, Menu } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 
 import { Switch, Route, Link } from "react-router-dom";
@@ -8,7 +8,8 @@ import { FormattedMessage } from "react-intl";
 
 import { storageContractABI, storageContractAdress } from "./../../contract.js";
 
-import { ReactComponent as CancelIcon } from "../../media/icons/cancel.svg";
+import { ReactComponent as CancelIcon } from "./../../media/icons/cancel.svg";
+import { ReactComponent as MenuIcon } from "./../../media/icons/menu.svg";
 
 import './header.scss';
 import { useState } from 'react';
@@ -101,6 +102,17 @@ export default function Heaader(props, locale) {
       props.setLocale(props.locale === "ru" ? "en" : "ru");
     }
 
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
+
     const formatWallet = (wallet) => {
       return wallet.substring(0, 6) + "..." + wallet.substring(wallet.length - 3);
     }
@@ -157,14 +169,14 @@ export default function Heaader(props, locale) {
               </div>
 
 
-              <div className="header-item">
-                <Box className="nav-buttons-wrapper" aria-label="Кнопки навигации">
+              <div className="header-item nav-buttons">
+                <div className="nav-buttons-wrapper" aria-label="Кнопки навигации">
                   <Switch>
                     <NavButtons exact={true} path="/app" isFirstActive={false} isSecondActive={true} locale={locale} styles={classes.navButton} />
                     <NavButtons exact={true} path="/" isFirstActive={true} isSecondActive={false} locale={locale} styles={classes.navButton} />
                     <NavButtons exact={false} path={null} isFirstActive={false} isSecondActive={false} locale={locale} styles={classes.navButton} />
                   </Switch>
-                </Box>
+                </div>
               </div>
 
               <div className="header-item connect-button-wrapper">
@@ -177,6 +189,41 @@ export default function Heaader(props, locale) {
                       value={{locale}} />
                   }
                 </Button>
+              </div>
+
+              <div className="header-item hamburger-menu">
+                <IconButton color="inherit" aria-label="Меню" className={classes.menuButton} onClick={handleClick}>
+                  <MenuIcon id="menu-icon" width="52px" height="52px" />
+                </IconButton>
+                <Menu
+                      id="simple-menu"
+                      anchorEl={anchorEl}
+                      getContentAnchorEl={null}
+                      anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                      transformOrigin={{ vertical: "top", horizontal: "center" }}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                    >
+                    <Route>
+                    <Link to="/" className="menu-item">
+                      <MenuItem>
+                        <FormattedMessage
+                            id="homeNavButton"
+                            defaultMessage="sample text"
+                            value={{locale}} />
+                      </MenuItem>
+                    </Link>
+                    <Link to="/app" className="menu-item">
+                      <MenuItem>
+                        <FormattedMessage
+                            id="appNavButton"
+                            defaultMessage="sample text"
+                            value={{locale}} />
+                      </MenuItem>
+                    </Link>
+                    </Route>
+                </Menu>
               </div>
 
               {loaderActive ? 
