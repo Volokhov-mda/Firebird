@@ -21,7 +21,7 @@ export default function MarketsLine(props) {
                     <p className={`asset-name`}>{props.asset}</p>
                 </div>
             </Grid>
-            <Grid item xs={windowWidth > 400 ? 2 : 0} className="market-cell apy-market" aria-label={`APY = ${props.apy}`}>
+            <Grid item xs={windowWidth > 400 ? 2 : false} className="market-cell apy-market" aria-label={`APY = ${props.apy}`}>
                 <div>{props.apy}</div>
             </Grid>
             <Grid item xs={windowWidth > 400 ? 3 : 4} className="market-cell" aria-label={`Кошелек - ${props.wallet}`}> {/* TODO: Кошелек? */}

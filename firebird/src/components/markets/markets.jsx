@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { div, Grid, makeStyles } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 
 import MarketsLine from "../marketsLine/marketsLine";
 import ModalWindow from "../modalWindow/modalWindow";
@@ -10,28 +10,14 @@ import { FormattedMessage } from "react-intl";
 
 import InlineSVG from 'svg-inline-react';
 
+import { ReactComponent as FirebirdLogo } from "./../../media/logo/F.svg";
 import { ReactComponent as CancelIcon } from "../../media/icons/cancel.svg";
 import { Link } from "react-router-dom";
-
-const useStyles = makeStyles(() => ({
-    gridItem: {
-        backgroundColor: "red",
-        height: "20px"
-    },
-    box: {
-        fontSize: "14px",
-        color: "#787878",
-        boxShadow: "none",
-        textAlign: "end"
-    },
-    firstItem: {
-        textAlign: "start"
-    }
-}));
+import Loader from "../loader/loader";
 
 export default function Markets(props, locale) {
-    const classes = useStyles();
     const [modalWindowActive, setModalWindowActive] = useState(false);
+    const [loaderActive, setLoaderActive] = useState(false)
     const [firstTabActive, setFirstTabActive] = useState(true);
     const [pressedAsset, setPressedAsset] = useState(undefined);
     const windowWidth = window.innerWidth;
@@ -44,7 +30,7 @@ export default function Markets(props, locale) {
                     <Grid item xs={windowWidth > 400 ? 5 : 4} className="market-cell">
                         <div className={`column-header`}>Asset</div>
                     </Grid>
-                    <Grid item xs={windowWidth > 400 ? 2 : 0} className="market-cell apy-market">
+                    <Grid item xs={windowWidth > 400 ? 2 : false} className="market-cell apy-market">
                         <div className={`column-header`}>APY</div>
                     </Grid>
                     <Grid item xs={windowWidth > 400 ? 3 : 4} className="market-cell">
@@ -71,13 +57,13 @@ export default function Markets(props, locale) {
 
             {modalWindowActive 
             ? <ModalWindow active={modalWindowActive} setActive={setModalWindowActive} asset={pressedAsset.asset}>
-                <div className="modal-header-wrapper">
-                    <div className="modal-header">
-                        <span className="selected-market-icon"><InlineSVG src={pressedAsset.logo} /></span> 
-                        <span className="selected-market-name">{pressedAsset.asset}</span>
-                        <button className="cancel-button" onClick={() => setModalWindowActive(false)}><CancelIcon className="cancel-icon" /></button>
+                <div className="modal-header-wrapper" aria-label={`Модальное окно ${pressedAsset.asset}`}>
+                    <div className="modal-header" aria-label={`Заголовок модального окна ${pressedAsset.asset}`}>
+                        <span className="selected-market-icon" aria-label="Логотип ассета"><InlineSVG src={pressedAsset.logo} /></span> 
+                        <span className="selected-market-name" aria-label={`${pressedAsset.asset}`}>{pressedAsset.asset}</span>
+                        <button className="cancel-button" aria-label="Закрыть" onClick={() => setModalWindowActive(false)}><CancelIcon className="cancel-icon" /></button>
                     </div>
-                    <div className="modal-coin-info">
+                    <div className="modal-coin-info" aria-label={"Подробнее о валюте"}>
                         <Link to={`/${pressedAsset.link}`}>
                             <FormattedMessage
                                 id="moreAboutCoin"
@@ -86,9 +72,9 @@ export default function Markets(props, locale) {
                         </Link>
                     </div>
                 </div>
-                <div className="tab-wrapper" aria-label={`Переключение вкладок ${props.marketsName} и Repay`}> 
+                <div className="tab-wrapper" aria-label={`Переключение вкладок ${props.isSupply ? "Supply и Withdraw" : "Borrow и Repay"}`}> 
                     <div className={`tab ${firstTabActive ? "active" : ""}`} onClick={() => setFirstTabActive(true)} 
-                        aria-label={`Вкладка ${props.marketsName}` + (firstTabActive ? ", активна" : "")}>
+                        aria-label={`Вкладка ${props.isSupply ? "Supply" : "Borrow"}` + (firstTabActive ? ", активна" : "")}>
                         {props.isSupply
                             ?  <FormattedMessage
                                     id="supply"
@@ -101,9 +87,9 @@ export default function Markets(props, locale) {
                         }
                     </div>
                     
-                    <div className={`tab ${!firstTabActive ? "active" : ""}`} onClick={() => setFirstTabActive(false)}
-                        ariaLabel={"Вкладка Repay" + (!firstTabActive ? ", активна" : "")}>
-                                                {props.isSupply
+                    <div className={`tab ${!firstTabActive ? "active" : ""}`} onClick={() => setFirstTabActive(false)} 
+                        aria-label={`Вкладка ${props.isSupply ? "Withdraw" : "Repay"}` + (!firstTabActive ? ", активна" : "")}>
+                        {props.isSupply
                             ?  <FormattedMessage
                                     id="withdraw"
                                     defaultMessage="sample text"
@@ -116,12 +102,191 @@ export default function Markets(props, locale) {
                     </div>
                 </div>
                 <div className="tab-content" aria-label={"Содержимое вкладки " + (firstTabActive ? "Borrow" : "Repay")}>
-                    {firstTabActive 
-                    ? <>первый чел для {!props.isSupply ? "борова" : (props.isSupply ? "супа" : "непонятно чего")}</>
-                    : <>второй чел для {!props.isSupply ? "борова" : (props.isSupply ? "супа" : "непонятно чего")}</>}
+                    {/* TODO: не забыть про режим для слабовидящих */}
+                    {loaderActive
+                    ? <div className="loader-wrapper" aria-label="Ожидание завершения транзакции"><Loader size={200} /></div>
+                    : firstTabActive 
+                        ? <div className="info" aria-label={props.isSupply ? "Вкладка Supply" : "Вкладка Borrow"}>
+                            {props.isSupply 
+                                ? <SupplyTab pressedAsset={pressedAsset} />
+                                : <BorrowTab pressedAsset={pressedAsset} />
+                            }
+                        </div>
+                        : <div className="info" aria-label={props.isSupply ? "Вкладка Withdraw" : "Вкладка Repay"}>
+                            {props.isSupply 
+                                ? <WithdrawTab pressedAsset={pressedAsset} />
+                                : <RepayTab pressedAsset={pressedAsset} />
+                            }
+                        </div>
+                    }
                 </div>
             </ModalWindow> 
             : null}
+        </div>
+    );
+}
+
+function SupplyTab(props) {
+    return (
+        <div className="form" aria-label="Supply форма">
+            <div className="form-header">Supply</div>
+            <div className="calculation" aria-label={`Supply APY = ${props.pressedAsset.supply.apy}%`}>
+                <span className="asset-info">
+                    <span className="icon"><InlineSVG src={props.pressedAsset.logo} aria-label={`Логотип выбранного ассета ${props.pressedAsset.asset}`} /></span> <span className="description"> Supply APY</span>
+                </span>
+                <span>
+                    <span>{props.pressedAsset.supply.apy}</span>
+                </span>
+            </div>
+            <div className="calculation" aria-label={`Distribution APY = ${"-"}%`}>
+                <span className="asset-info">
+                    <span className="icon"><FirebirdLogo aria-label="Логотип Firebird" /></span> <span className="description"> Distribution APY</span>
+                </span>
+                <span>
+                    <span>- %</span>
+                </span>
+            </div>
+            <Button color="primary" variant="contained" className="submit-button" aria-label="Включить (enable)">Сосу недорого</Button>
+        </div>
+    );
+}
+
+function WithdrawTab(props) {
+    return (
+        <>
+            {/* TODO: ввод суммы? */}
+            <div className="form" aria-label="Ввод суммы">
+                <div className="input">
+                    <input id="withdraw-input-box" className="input-box" type="number" placeholder="0" />
+                    <div className="max-button-wrapper">
+                        <span>or</span>
+                        <button className="max-button" 
+                            onClick={() => {document.getElementById("withdraw-input-box").value = 100}} ariaLabel="Ввести максимум">Max</button>
+                    </div>
+                </div>
+            </div>
+            <div className="form" aria-label="Supply форма">
+                <div className="form-header">Supply</div>
+                <div className="calculation" aria-label={`Supply APY = ${props.pressedAsset.supply.apy}%`}>
+                    <span className="asset-info">
+                        <span className="icon"><InlineSVG src={props.pressedAsset.logo} aria-label={`Логотип выбранного ассета ${props.pressedAsset.asset}`} /></span> <span className="description"> Supply APY</span>
+                    </span>
+                    <span>
+                        <span>{props.pressedAsset.supply.apy}</span>
+                    </span>
+                </div>
+                <div className="calculation" aria-label={`Distribution APY = ${"-"}%`}>
+                    <span className="asset-info">
+                        <span className="icon"><FirebirdLogo aria-label="Логотип Firebird" /></span> <span className="description"> Distribution APY</span>
+                    </span>
+                    <span>
+                        <span>- %</span>
+                    </span>
+                </div>
+            </div>
+            <div className="form" aria-label="Borrow Limit форма">
+                <div className="form-header">Borrow Limit</div>
+                <div className="calculation" aria-label={`Borrow Limit = $${0.00}`}>
+                    <span className="asset-info">
+                        <span className="description"> Borrow Limit</span>
+                    </span>
+                    <span>
+                        <span>$0.00</span>
+                    </span>
+                </div>
+                <div className="calculation" aria-label={`Borrow Limit Used = ${0}%`}>
+                    <span className="asset-info">
+                        <span className="description"> Borrow Limit Used</span>
+                    </span>
+                    <span>
+                        <span>0%</span>
+                    </span>
+                </div>
+                <Button color="primary" variant="contained" className="submit-button" aria-label="Вывести">Сосу недорого</Button>
+            </div>
+        </>
+    );
+}
+
+function BorrowTab(props) {
+    return (
+        <>
+            {/* TODO: ввод суммы? */}
+            <div className="form" aria-label="Ввод суммы">
+                <div className="input">
+                    <input id="borrow-input-box" className="input-box" type="number" placeholder="0" />
+                    <div className="max-button-wrapper" aria-label="Или максимально возможное количество">
+                        <span>or</span>
+                        <button className="max-button" 
+                            onClick={() => {document.getElementById("borrow-input-box").value = 100 * .8}} ariaLabel="Ввести 80%">80% limit</button>
+                    </div>
+                </div>
+            </div>
+            <div className="form" aria-label="Borrow форма">
+                <div className="form-header">Borrow</div>
+                <div className="calculation" aria-label={`Supply APY = ${props.pressedAsset.borrow.apy}%`}>
+                    <span className="asset-info">
+                        <span className="icon"><InlineSVG src={props.pressedAsset.logo} aria-label={`Логотип выбранного ассета ${props.pressedAsset.asset}`} /></span> <span className="description"> Supply APY</span>
+                    </span>
+                    <span>
+                        <span>{props.pressedAsset.borrow.apy}</span>
+                    </span>
+                </div>
+                <div className="calculation" aria-label={`Distribution APY = ${"-"}%`}>
+                    <span className="asset-info">
+                        <span className="icon"><FirebirdLogo aria-label="Логотип Firebird" /></span> <span className="description"> Distribution APY</span>
+                    </span>
+                    <span>
+                        <span>- %</span>
+                    </span>
+                </div>
+            </div>
+            <div className="form" aria-label="Borrow Limit форма">
+                <div className="form-header">Borrow Limit</div>
+                <div className="calculation" aria-label={`Borrow Limit = $${0.00}`}>
+                    <span className="asset-info">
+                        <span className="description"> Borrow Balance</span>
+                    </span>
+                    <span>
+                        <span>$0.00</span>
+                    </span>
+                </div>
+                <div className="calculation" aria-label={`Borrow Limit Used = ${0}%`}>
+                    <span className="asset-info">
+                        <span className="description"> Borrow Limit Used</span>
+                    </span>
+                    <span>
+                        <span>0%</span>
+                    </span>
+                </div>
+                <Button color="primary" variant="contained" className="submit-button" aria-label="Занять валюту">Сосу недорого</Button>
+            </div>
+        </>
+    );
+}
+
+function RepayTab(props) {
+    return (
+        <div className="form" aria-label="Borrow форма">
+            <div className="form-header">Borrow</div>
+            <div className="calculation" aria-label={`Borrow APY = ${props.pressedAsset.borrow.apy}%`}>
+                <span className="asset-info">
+                    <span className="icon"><InlineSVG src={props.pressedAsset.logo} /></span> <span className="description"> Borrow APY</span>
+                </span>
+                <span>
+                    <span>{props.pressedAsset.borrow.apy}</span>
+                </span>
+            </div>
+            <div className="calculation" aria-label={`Distribution APY = ${"-"}%`}>
+                <span className="asset-info">
+                    <span className="icon"><FirebirdLogo aria-label="Логотип Firebird" /></span> <span className="description"> Distribution APY</span>
+                </span>
+                <span>
+                    <span>- %</span>
+                </span>
+            </div>
+
+            <Button color="primary" variant="contained" className="submit-button" aria-label="Отдать долг">Сосу недорого</Button>
         </div>
     );
 }

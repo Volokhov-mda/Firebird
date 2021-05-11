@@ -22,6 +22,8 @@
             align-items: center;
 
             margin: 0 10px;
+            
+            font-size: 14.5px;
 
             .balance-header {
                 color: $base-color;
@@ -99,16 +101,20 @@
         align-items: center;
 
         max-width: 960px;
-
+        
         padding: 0 24px;
         margin: 40px auto 0;
-
+        
         .borrow-limit-header {
+            // min-width: 135px;
+
             margin-right: 10px;
-
-            color: #787878;
-
+            
             white-space: nowrap;
+            
+            #borrow-limit-label {
+                color: #929292;
+            }
 
             #borrow-limit {
                 color: #fff;

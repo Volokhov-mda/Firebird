@@ -90,12 +90,19 @@
 
   .modal-header {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      
+      color: #000;
 
       .header {
-        color: #000;
+      }
+
+      .header-subtitle {
+        margin-top: 3px;
+
+        font-size: 12px;
       }
   
       .cancel-button {

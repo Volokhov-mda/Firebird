@@ -3,7 +3,7 @@ import "./balance.scss";
 import { FormattedMessage } from "react-intl";
 
 export default function Balance(props, locale) {
-    const borrowLimit = 85;
+    const borrowLimit = 56;
 
     return (
         <div className="balance-container" aria-label="Текущие балансы предложения (supply) и займа (borrow)">
@@ -70,7 +70,14 @@ export default function Balance(props, locale) {
             </div>
 
             <div className="borrow-limit-wrapper">
-                <div className="borrow-limit-header">Borrow limit <span id="borrow-limit">{borrowLimit}%</span></div>
+                <div className="borrow-limit-header">
+                    <span id="borrow-limit-label">
+                        <FormattedMessage
+                            id="borrowLimit"
+                            defaultMessage="sample text"
+                            value={{locale}} />:
+                    </span>
+                    <span id="borrow-limit"> {borrowLimit}%</span></div>
                 <div className="borrow-limit-visualization">
                     <div className="current-borrow-limit" style={{width: `${borrowLimit}%`}}></div>
                 </div>

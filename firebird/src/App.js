@@ -12,6 +12,8 @@ import { IntlProvider } from "react-intl";
 import Welcome from "./components/welcome/welcome.jsx";
 import Loader from "./components/loader/loader.jsx";
 
+import "./App.scss";
+
 const data = {
   user: {
     supply: "$2",
@@ -64,64 +66,7 @@ const data = {
   ]
 }
 
-const textLocals = {
-  ru: {
-    // HEADER
-    homeNavButton: "Главная",
-    appNavButton: "Приложение",
-    connectWallet: "Подключить кошелек",
-
-    // BALANCE
-    supplyBalance: "Баланс предложения",
-    netAPY: "Чистая доходность",
-    borrowBalance: "Баланс займа",
-
-    // MARKETS
-    supplyMarket: "Рынок предложения",
-    borrowMarket: "Рынок займа",
-    moreAboutCoin: "Подробнее о валюте...",
-    supply: "Предоставить валюту",
-    withdraw: "Вывести валюту",
-    borrow: "Занять валюту",
-    repay: "Отдать долг",
-
-    // COIN INFO
-    backButton: "← Назад",
-
-    // FOOTER
-    createdBy: "Создали:",
-    author1: "Никита Волохов",
-    author2: "Крылов Павел"
-  },
-  en: {
-    // HEADER
-    homeNavButton: "Home",
-    appNavButton: "App",
-    connectWallet: "Connect wallet",
-
-    // BALANCE
-    supplyBalance: "Supply Balance",
-    netAPY: "Net APY",
-    borrowBalance: "Borrow Balance",
-    supply: "Supply",
-    withdraw: "Withdraw",
-    borrow: "Borrow",
-    repay: "Repay",
-
-    // MARKETS
-    supplyMarket: "Supply markets",
-    borrowMarket: "Borrow markets",
-    moreAboutCoin: "More about coin...",
-
-    // COIN INFO
-    backButton: "← Back",
-
-    // FOOTER
-    createdBy: "Created by:",
-    author1: "Nikita Volokhov",
-    author2: "Krylov Pavel"
-  }
-}
+const textLocals = require("./textLocals.json");
 
 export default function App() {
   const [locale, setLocale] = useState("ru");

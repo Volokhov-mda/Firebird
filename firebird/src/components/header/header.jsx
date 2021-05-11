@@ -1,5 +1,5 @@
 import { ReactComponent as Logo } from './../../media/logo/F.svg';
-import { AppBar, Box, Button, IconButton, Container, Toolbar, Menu, MenuItem } from '@material-ui/core';
+import { AppBar, Box, Button, IconButton, Container, Toolbar } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 
 import { Switch, Route, Link } from "react-router-dom";
@@ -12,14 +12,12 @@ import { ReactComponent as CancelIcon } from "../../media/icons/cancel.svg";
 
 import './header.scss';
 import { useState } from 'react';
-import { withStyles } from '@material-ui/styles';
 
 import Web3 from 'web3';
 
 import ModalWindow from '../modalWindow/modalWindow';
 import Loader from '../loader/loader';
-import { resolve } from 'q';
-// import LoaderWindow from '../loaderWindow/loaderWindow';
+import LoaderWindow from '../loaderWindow/loaderWindow';
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -54,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
       padding: 0
     },
     navButton: {
-      width: "130px",
+      width: "140px",
       height: "53px",
       marginLeft: theme.spacing(1.5),
       marginRight: theme.spacing(1.5),
@@ -68,18 +66,8 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
       padding: "0",
     }
-  }));
+}));
 
-const StyledMenuItem = withStyles((theme) => ({
-  root: {
-    '&:hover': {
-      backgroundColor: theme.palette.primary.main,
-      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-        color: theme.palette.common.white,
-      },
-    },
-  },
-}))(MenuItem);
 
 function NavButtons(props, locale) {
   return (
@@ -106,19 +94,10 @@ function NavButtons(props, locale) {
 
 export default function Heaader(props, locale) {
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = useState(null);
     const [loaderActive, setLoaderActive] = useState(false);
-    const [wallet, setWallet] = useState(undefined);
+    const [walletConnected, setWalletConnected] = useState(false);
 
-    const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-  
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
-
-    const handleChange = (event) => {
+    const handleChangeLocale = (event) => {
       props.setLocale(props.locale === "ru" ? "en" : "ru");
     }
 
@@ -126,21 +105,34 @@ export default function Heaader(props, locale) {
       return wallet.substring(0, 6) + "..." + wallet.substring(wallet.length - 3);
     }
 
-    const handleConnection = () => {
+    const startConnection = async () => {
       if (typeof window.web3 !== 'undefined') {
         window.web3 = new Web3(Web3.givenProvider);
-        console.log("Дед жив");
       } else {
         alert("Подключите MetaMask");
+        setWalletConnected(false);
       }
 
-      window.web3.eth.getAccounts((error, result) => {
-          if (error) {
-              console.log(error);
-          } else {
-              resolve(result);
-          }
-      }).then(result => { setWallet(result[0]); window.wallet = result[0]; window.storageContract = new window.web3.eth.Contract(storageContractABI, storageContractAdress); setLoaderActive(false); });
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const account = accounts[0];
+        window.wallet = account;
+        window.storageContract = new window.web3.eth.Contract(storageContractABI, storageContractAdress); 
+        setWalletConnected(true); 
+        setLoaderActive(false); 
+      } catch (err) {
+        alert(err.message);
+        setLoaderActive(false);
+      }
+    }
+
+    const handleWalletButton = () => {
+      if (!walletConnected) {
+        setLoaderActive(true); 
+        startConnection();
+      } else {
+        console.log("TODO some wallet operations");
+      }
     }
 
     return (
@@ -156,7 +148,7 @@ export default function Heaader(props, locale) {
                       </IconButton>
                     </Link>
                     <div>
-                      <Button color="primary" className="locale-switch" onClick={handleChange}>
+                      <Button color="primary" className="locale-switch" onClick={handleChangeLocale}>
                         {props.locale === "ru" ? "рус" : "en"}
                       </Button>
                     </div>
@@ -176,9 +168,9 @@ export default function Heaader(props, locale) {
               </div>
 
               <div className="header-item connect-button-wrapper">
-                <Button color="primary" className={`${classes.connectButton} connect-button`} onClick={() => {setLoaderActive(true); handleConnection();}}>
-                  {wallet 
-                  ? <span className="wallet">{formatWallet(wallet)}</span>
+                <Button color="primary" className={`${classes.connectButton} connect-button`} onClick={ handleWalletButton }>
+                  {window.wallet 
+                  ? <span className="wallet">{formatWallet(window.wallet)}</span>
                   : <FormattedMessage
                       id="connectWallet"
                       defaultMessage="sample text"
@@ -191,12 +183,23 @@ export default function Heaader(props, locale) {
                 <ModalWindow setActive={setLoaderActive}>
                   <div className="modal-header-wrapper">
                       <div className="modal-header">
-                          <span className="header">Loading...</span>
+                          <span className="header">
+                            <FormattedMessage
+                              id="loading"
+                              defaultMessage="sample text"
+                              value={{locale}} />
+                          </span>
+                          <span className="header-subtitle">
+                            <FormattedMessage
+                              id="loading-subtitle"
+                              defaultMessage="sample text"
+                              value={{locale}} /> <a href="https://metamask.io/">Metamask</a>
+                          </span>
                           <button className="cancel-button" onClick={() => setLoaderActive(false)}><CancelIcon className="cancel-icon" /></button>
                       </div>
                   </div>
                   <div className="loader-wrapper">
-                    <Loader width="100" height="100" />
+                    <Loader size="200" />
                   </div>
                 </ModalWindow>
                 : null}

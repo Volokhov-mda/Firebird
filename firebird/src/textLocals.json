@@ -1,0 +1,56 @@
+{
+    "ru": {
+        "homeNavButton": "Главная",
+        "appNavButton": "Приложение",
+        "connectWallet": "Подключить кошелек",
+
+        "supplyBalance": "Баланс предложения",
+        "netAPY": "Чистая доходность",
+        "borrowBalance": "Баланс займа",
+        "borrowLimit": "Лимит займа",
+        
+        "supplyMarket": "Рынок предложения",
+        "borrowMarket": "Рынок займа",
+        "moreAboutCoin": "Подробнее о валюте...",
+        "supply": "Предоставить валюту",
+        "withdraw": "Вывести валюту",
+        "borrow": "Занять валюту",
+        "repay": "Отдать долг",
+
+        "backButton": "← Назад",
+
+        "createdBy": "Создали:",
+        "author1": "Никита Волохов",
+        "author2": "Крылов Павел",
+
+        "loading": "Загрузка...",
+        "loading-subtitle": "Возможно, вам необходимо подключить"
+    },
+    "en": {
+        "homeNavButton": "Home",
+        "appNavButton": "App",
+        "connectWallet": "Connect wallet",
+
+        "supplyBalance": "Supply Balance",
+        "netAPY": "Net APY",
+        "borrowBalance": "Borrow Balance",
+        "borrowLimit": "Borrow limit",
+
+        "supply": "Supply",
+        "withdraw": "Withdraw",
+        "borrow": "Borrow",
+        "repay": "Repay",
+        "supplyMarket": "Supply markets",
+        "borrowMarket": "Borrow markets",
+        "moreAboutCoin": "More about coin...",
+
+        "backButton": "← Back",
+
+        "createdBy": "Created by:",
+        "author1": "Nikita Volokhov",
+        "author2": "Krylov Pavel",
+
+        "loading": "Loading...",
+        "loading-subtitle": "You may need to enable"
+    }
+}
