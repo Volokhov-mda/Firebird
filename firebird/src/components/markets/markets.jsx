@@ -20,7 +20,11 @@ export default function Markets(props, locale) {
     const [loaderActive, setLoaderActive] = useState(false)
     const [firstTabActive, setFirstTabActive] = useState(true);
     const [pressedAsset, setPressedAsset] = useState(undefined);
-    const windowWidth = window.innerWidth;
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    window.addEventListener("resize", () => {
+        setWindowWidth(window.innerWidth);
+    });
 
     return (
         <div className="markets-wrapper" aria-label={props.ariaLabel}>
@@ -146,7 +150,7 @@ function SupplyTab(props) {
                     <span>- %</span>
                 </span>
             </div>
-            <Button color="primary" variant="contained" className="submit-button" aria-label="Включить (enable)">Сосу недорого</Button>
+            <Button color="primary" variant="contained" className="submit-button" aria-label="Включить (enable)">Подтвердить</Button>
         </div>
     );
 }
@@ -161,7 +165,7 @@ function WithdrawTab(props) {
                     <div className="max-button-wrapper">
                         <span>or</span>
                         <button className="max-button" 
-                            onClick={() => {document.getElementById("withdraw-input-box").value = 100}} ariaLabel="Ввести максимум">Max</button>
+                            onClick={() => {document.getElementById("withdraw-input-box").value = 100}} aria-label="Ввести максимум">Max</button>
                     </div>
                 </div>
             </div>
@@ -202,7 +206,7 @@ function WithdrawTab(props) {
                         <span>0%</span>
                     </span>
                 </div>
-                <Button color="primary" variant="contained" className="submit-button" aria-label="Вывести">Сосу недорого</Button>
+                <Button color="primary" variant="contained" className="submit-button" aria-label="Вывести">Подтвердить</Button>
             </div>
         </>
     );
@@ -218,7 +222,7 @@ function BorrowTab(props) {
                     <div className="max-button-wrapper" aria-label="Или максимально возможное количество">
                         <span>or</span>
                         <button className="max-button" 
-                            onClick={() => {document.getElementById("borrow-input-box").value = 100 * .8}} ariaLabel="Ввести 80%">80% limit</button>
+                            onClick={() => {document.getElementById("borrow-input-box").value = 100 * .8}} aria-label="Ввести 80%">80% limit</button>
                     </div>
                 </div>
             </div>
@@ -259,7 +263,7 @@ function BorrowTab(props) {
                         <span>0%</span>
                     </span>
                 </div>
-                <Button color="primary" variant="contained" className="submit-button" aria-label="Занять валюту">Сосу недорого</Button>
+                <Button color="primary" variant="contained" className="submit-button" aria-label="Занять валюту">Подтвердить</Button>
             </div>
         </>
     );
@@ -286,7 +290,7 @@ function RepayTab(props) {
                 </span>
             </div>
 
-            <Button color="primary" variant="contained" className="submit-button" aria-label="Отдать долг">Сосу недорого</Button>
+            <Button color="primary" variant="contained" className="submit-button" aria-label="Отдать долг">Подтвердить</Button>
         </div>
     );
 }

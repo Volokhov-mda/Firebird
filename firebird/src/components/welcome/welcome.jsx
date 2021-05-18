@@ -13,7 +13,11 @@ export default function Welcome(props, locale) {
         <div className="welcome-wrapper">
             {/* TODO: Режим для слабовидящих */}
             <div className="welcome-header">
-                Firebird Finance -<br /> криптобиржа для криптопацанов
+                <span className="app-name">Firebird Finance</span> -<br /> 
+                <FormattedMessage
+                    id="welcomeSubtitle"
+                    defaultMessage="sample text"
+                    value={{locale}} />
             </div>
             <WelcomeBlock reverse={false} backgroundColor="lightpink" image={PepeImg}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -32,7 +36,7 @@ export default function Welcome(props, locale) {
                     </div>
                     <Route className="try-now-button-wrapper">
                         <Link to="/app">
-                            <Button color="primary" variant="contained" className="try-now-button">
+                            <Button color="primary" variant="contained" className="try-now-button" onClick={() => { window.scroll(0, 0) }}>
                                 <FormattedMessage
                                     id="goToApp"
                                     defaultMessage="sample text"

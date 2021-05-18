@@ -1,17 +1,14 @@
-import { Grid, makeStyles, Switch } from "@material-ui/core";
+import { Grid, Switch } from "@material-ui/core";
+import { useState } from "react";
 import InlineSVG from 'svg-inline-react';
 import "./marketsLine.scss";
 
-const useStyles = makeStyles(() => ({
-    firstItem: {
-        justifyContent: "flex-start",
-        textAlign: "start"
-    }
-}));
-
 export default function MarketsLine(props) {
-    const classes = useStyles();
-    const windowWidth = window.innerWidth;
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    window.addEventListener("resize", () => {
+        setWindowWidth(window.innerWidth);
+    });
 
     return (
         <Grid container spacing={0} alignItems="center" className="grid-container">

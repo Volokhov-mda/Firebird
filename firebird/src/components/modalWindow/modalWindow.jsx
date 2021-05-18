@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import "./modalWindow.scss";
 
-export default function ModalWindow({active, setActive, children, asset}) {
-    const windowHeight = window.innerHeight;
+export default function ModalWindow({setActive, children, asset}) {
+    const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+    window.addEventListener("resize", () => {
+        setWindowHeight(window.innerHeight);
+    });
+
 
     return (
         <div className="modal-window" onClick={() => setActive(false)} style={{height: windowHeight + "px"}}>

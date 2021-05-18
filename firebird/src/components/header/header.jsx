@@ -1,5 +1,5 @@
 import { ReactComponent as Logo } from './../../media/logo/F.svg';
-import { AppBar, Box, Button, IconButton, Container, Toolbar, MenuItem, Menu } from '@material-ui/core';
+import { AppBar, Button, IconButton, Container, Toolbar, MenuItem, Menu } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 
 import { Switch, Route, Link } from "react-router-dom";
@@ -18,7 +18,6 @@ import Web3 from 'web3';
 
 import ModalWindow from '../modalWindow/modalWindow';
 import Loader from '../loader/loader';
-import LoaderWindow from '../loaderWindow/loaderWindow';
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -93,22 +92,21 @@ function NavButtons(props, locale) {
   );
 }
 
-export default function Heaader(props, locale) {
+export default function Header(props, locale) {
     const classes = useStyles();
     const [loaderActive, setLoaderActive] = useState(false);
     const [walletConnected, setWalletConnected] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     const handleChangeLocale = (event) => {
       props.setLocale(props.locale === "ru" ? "en" : "ru");
     }
 
-    const [anchorEl, setAnchorEl] = useState(null);
-
-    const handleClick = (event) => {
+    const handleOpenHamburger = (event) => {
       setAnchorEl(event.currentTarget);
     };
   
-    const handleClose = () => {
+    const handleCloseHamburger = () => {
       setAnchorEl(null);
     };
 
@@ -121,7 +119,6 @@ export default function Heaader(props, locale) {
       if (typeof window.web3 !== 'undefined') {
         window.web3 = new Web3(Web3.givenProvider);
       } else {
-        alert("Подключите MetaMask");
         setWalletConnected(false);
       }
 
@@ -192,7 +189,7 @@ export default function Heaader(props, locale) {
               </div>
 
               <div className="header-item hamburger-menu">
-                <IconButton color="inherit" aria-label="Меню" className={classes.menuButton} onClick={handleClick}>
+                <IconButton color="inherit" aria-label="Меню" className={classes.menuButton} onClick={handleOpenHamburger}>
                   <MenuIcon id="menu-icon" width="52px" height="52px" />
                 </IconButton>
                 <Menu
@@ -203,7 +200,7 @@ export default function Heaader(props, locale) {
                       transformOrigin={{ vertical: "top", horizontal: "center" }}
                       keepMounted
                       open={Boolean(anchorEl)}
-                      onClose={handleClose}
+                      onClose={handleCloseHamburger}
                     >
                     <Route>
                     <Link to="/" className="menu-item">

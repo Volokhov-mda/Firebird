@@ -18,12 +18,20 @@
 
     .modal-window-content {
         width: 450px;
-        // height: 200px;
-
-        // padding: 20px;
+        max-height: 90vh;
 
         border-radius: 12px;
         background: $base-background-color;
+
+        overflow-y: scroll;
+
+        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        scrollbar-width: none;  /* Firefox */
+    }
+
+    .modal-window-content::-webkit-scrollbar {
+        display: none;  /* Safari and Chrome */
+
     }
 }
 

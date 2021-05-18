@@ -26,6 +26,7 @@
         "loading": "Загрузка...",
         "loading-subtitle": "Возможно, вам необходимо подключить",
 
+        "welcomeSubtitle": "криптобиржа для криптопацанов",
         "tryNow": "Попробовать сейчас!",
         "goToApp": "Перейти в приложение"
     },
@@ -56,6 +57,7 @@
         "loading": "Loading...",
         "loading-subtitle": "You may need to enable",
 
+        "welcomeSubtitle": "cryptomarket for cryptoboys",
         "tryNow": "Try now!",
         "goToApp": "Go to App"
     }
