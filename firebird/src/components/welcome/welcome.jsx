@@ -1,9 +1,9 @@
 import WelcomeBlock from "../welcomeBlock/welcomeBlock";
 import "./welcome.scss";
 
-import PepeImg from "./../../media/images/blockchainPepe.jpg";
-import PavelAwful from "./../../media/images/pavelAwful.jpg";
-import { Button } from "@material-ui/core";
+import Blockchain from "./../../media/images/blockchain.jpg";
+import Stonks from "./../../media/images/stonks.jpg";
+import { Button, StepIcon } from "@material-ui/core";
 import { Route } from "react-router";
 import { Link } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -19,11 +19,17 @@ export default function Welcome(props, locale) {
                     defaultMessage="sample text"
                     value={{locale}} />
             </div>
-            <WelcomeBlock reverse={false} backgroundColor="lightpink" image={PepeImg}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <WelcomeBlock reverse={false} backgroundColor="#f9f9f9" image={Blockchain}>
+                <FormattedMessage
+                    id="welcomeBlock1"
+                    defaultMessage="sample text"
+                    value={{locale}} />
             </WelcomeBlock>
-            <WelcomeBlock reverse={true} backgroundColor="lightgray" image={PavelAwful}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <WelcomeBlock reverse={true} backgroundColor="#f9f9f9" image={Stonks}>
+                <FormattedMessage
+                    id="welcomeBlock2"
+                    defaultMessage="sample text"
+                    value={{locale}} /> 
             </WelcomeBlock>
 
             <div className="try-now">

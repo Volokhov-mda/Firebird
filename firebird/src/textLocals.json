@@ -21,12 +21,14 @@
 
         "createdBy": "Создали:",
         "author1": "Никита Волохов",
-        "author2": "Крылов Павел",
+        "author2": "Павел Крылов",
 
         "loading": "Загрузка...",
         "loading-subtitle": "Возможно, вам необходимо подключить",
 
-        "welcomeSubtitle": "криптобиржа для криптопацанов",
+        "welcomeSubtitle": "система для проведения сделок РЕПО для криптовалют и токенов",
+        "welcomeBlock1": "В разработанной программе мы внедряем децентрализованную систему для беспрепятственного заимствования токенов и Ether без недостатков существующих подходов, позволяя функционировать надлежащим образом денежным рынкам и создавая безопасный подход к хранению активов с положительной доходностью",
+        "welcomeBlock2": "По сравнению с существующими DeFi-системами, разработанный нами программный продукт позволяет добавлять новые токены, цифровые финансовые активы и криптовалюты в систему, что делает ее более гибкой и удобной для использования с часто появляющимися новыми крипто-активами",
         "tryNow": "Попробовать сейчас!",
         "goToApp": "Перейти в приложение"
     },
@@ -52,12 +54,14 @@
 
         "createdBy": "Created by:",
         "author1": "Nikita Volokhov",
-        "author2": "Krylov Pavel",
+        "author2": "Pavel Krylov",
 
         "loading": "Loading...",
         "loading-subtitle": "You may need to enable",
 
-        "welcomeSubtitle": "cryptomarket for cryptoboys",
+        "welcomeSubtitle": "the system for conducting REPO transactions for cryptocurrencies and tokens",
+        "welcomeBlock1": "In the developed program, we implement a decentralized system for the smooth borrowing of tokens and Ether without the disadvantages of existing approaches, allowing the money markets to function properly and creating a secure approach to the storage of assets with positive returns.",
+        "welcomeBlock2": "Compared to existing DeFi systems, the software product developed by us allows you to add new tokens, digital financial assets and cryptocurrencies to the system, which makes it more flexible and convenient to use with frequently emerging new crypto assets",
         "tryNow": "Try now!",
         "goToApp": "Go to App"
     }
