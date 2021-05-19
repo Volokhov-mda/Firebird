@@ -17,14 +17,20 @@ import Loader from "../loader/loader";
 
 export default function Markets(props, locale) {
     const [modalWindowActive, setModalWindowActive] = useState(false);
-    const [loaderActive, setLoaderActive] = useState(false)
+
+    const [loaderActive, setLoaderActive] = useState(true);
+    // const [loaderActive, setLoaderActive] = useState(false);
+
     const [firstTabActive, setFirstTabActive] = useState(true);
     const [pressedAsset, setPressedAsset] = useState(undefined);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
     const [disabledSupply, setDisabledSupply] = useState(true);
     const [disabledWithdraw, setDisabledWithdraw] = useState(true);
     const [disabledBorrow, setDisabledBorrow] = useState(true);
     const [disabledRepay, setDisabledRepay] = useState(true);
+
+    const maxValue = 100;
 
     window.addEventListener("resize", () => {
         setWindowWidth(window.innerWidth);
@@ -116,14 +122,14 @@ export default function Markets(props, locale) {
                     : firstTabActive 
                         ? <div className="info" aria-label={props.isSupply ? "Вкладка Supply" : "Вкладка Borrow"}>
                             {props.isSupply 
-                                ? <SupplyTab pressedAsset={pressedAsset} disabled={disabledSupply} setDisabled={setDisabledSupply} />
-                                : <BorrowTab pressedAsset={pressedAsset} disabled={disabledBorrow} setDisabled={setDisabledBorrow} />
+                                ? <SupplyTab pressedAsset={pressedAsset} disabled={disabledSupply} setDisabled={setDisabledSupply} max={maxValue} />
+                                : <BorrowTab pressedAsset={pressedAsset} disabled={disabledBorrow} setDisabled={setDisabledBorrow} max={maxValue} />
                             }
                         </div>
                         : <div className="info" aria-label={props.isSupply ? "Вкладка Withdraw" : "Вкладка Repay"}>
                             {props.isSupply 
-                                ? <WithdrawTab pressedAsset={pressedAsset} disabled={disabledWithdraw} setDisabled={setDisabledWithdraw} />
-                                : <RepayTab pressedAsset={pressedAsset} disabled={disabledRepay} setDisabled={setDisabledRepay} />
+                                ? <WithdrawTab pressedAsset={pressedAsset} disabled={disabledWithdraw} setDisabled={setDisabledWithdraw} max={maxValue} />
+                                : <RepayTab pressedAsset={pressedAsset} disabled={disabledRepay} setDisabled={setDisabledRepay} max={maxValue} />
                             }
                         </div>
                     }
@@ -134,16 +140,16 @@ export default function Markets(props, locale) {
     );
 }
 
-function SupplyTab(props) {
+function SupplyTab(props, locale) {
     return (
         <>
         <div className="form" aria-label="Ввод суммы">
             <div className="input">
-                <input id="supply-input-box" className="input-box" type="number" placeholder="0" min="0" onInput={(event) => {props.setDisabled(event.target.value <= 0 ? true : false)}} />
+                <input id="supply-input-box" className="input-box" type="number" placeholder="0" min="0" onInput={(event) => {props.setDisabled((event.target.value <= 0 || event.target.value > props.max) ? true : false)}} />
                 <div className="max-button-wrapper">
                     <span>or</span>
                     <button className="max-button" 
-                        onClick={() => {document.getElementById("supply-input-box").value = 100}} aria-label="Ввести максимум">Max</button>
+                        onClick={() => {document.getElementById("supply-input-box").value = props.max}} aria-label="Ввести максимум">Max</button>
                 </div>
             </div>
         </div>
@@ -165,23 +171,28 @@ function SupplyTab(props) {
                     <span>- %</span>
                 </span>
             </div>
-            <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} disabled={props.disabled} aria-label="Включить (enable)">Подтвердить</Button>
+            <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} disabled={props.disabled} aria-label="Включить (enable)">
+                <FormattedMessage
+                    id="confirmButton"
+                    defaultMessage="sample text"
+                    value={{locale}} />
+            </Button>
         </div>
         </>
     );
 }
 
-function WithdrawTab(props) {
+function WithdrawTab(props, locale) {
     return (
         <>
             {/* TODO: ввод суммы? */}
             <div className="form" aria-label="Ввод суммы">
                 <div className="input">
-                    <input id="withdraw-input-box" className="input-box" type="number" placeholder="0" onInput={(event) => {props.setDisabled(event.target.value <= 0 ? true : false)}} />
+                    <input id="withdraw-input-box" className="input-box" type="number" placeholder="0" onInput={(event) => {props.setDisabled((event.target.value <= 0 || event.target.value > props.max) ? true : false)}} />
                     <div className="max-button-wrapper">
                         <span>or</span>
                         <button className="max-button" 
-                            onClick={() => {document.getElementById("withdraw-input-box").value = 100}} aria-label="Ввести максимум">Max</button>
+                            onClick={() => {document.getElementById("withdraw-input-box").value = props.max}} aria-label="Ввести максимум">Max</button>
                     </div>
                 </div>
             </div>
@@ -222,23 +233,28 @@ function WithdrawTab(props) {
                         <span>0%</span>
                     </span>
                 </div>
-                <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} disabled={props.disabled} aria-label="Вывести">Подтвердить</Button>
+                <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} disabled={props.disabled} aria-label="Вывести">
+                    <FormattedMessage
+                        id="confirmButton"
+                        defaultMessage="sample text"
+                        value={{locale}} />
+                </Button>
             </div>
         </>
     );
 }
 
-function BorrowTab(props) {
+function BorrowTab(props, locale) {
     return (
         <>
             {/* TODO: ввод суммы? */}
             <div className="form" aria-label="Ввод суммы">
                 <div className="input">
-                    <input id="borrow-input-box" className="input-box" type="number" placeholder="0" onInput={(event) => {props.setDisabled(event.target.value <= 0 ? true : false)}} />
+                    <input id="borrow-input-box" className="input-box" type="number" placeholder="0" onInput={(event) => {props.setDisabled((event.target.value <= 0 || event.target.value > props.max * .8) ? true : false)}} />
                     <div className="max-button-wrapper" aria-label="Или максимально возможное количество">
                         <span>or</span>
                         <button className="max-button" 
-                            onClick={() => {document.getElementById("borrow-input-box").value = 100 * .8}} aria-label="Ввести 80%">80% limit</button>
+                            onClick={() => {document.getElementById("borrow-input-box").value = props.max * .8}} aria-label="Ввести 80%">80% limit</button>
                     </div>
                 </div>
             </div>
@@ -279,22 +295,27 @@ function BorrowTab(props) {
                         <span>0%</span>
                     </span>
                 </div>
-                <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} disabled={props.disabled} aria-label="Занять валюту">Подтвердить</Button>
+                <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} disabled={props.disabled} aria-label="Занять валюту">
+                    <FormattedMessage
+                        id="confirmButton"
+                        defaultMessage="sample text"
+                        value={{locale}} />
+                </Button>
             </div>
         </>
     );
 }
 
-function RepayTab(props) {
+function RepayTab(props, locale) {
     return (
         <>
         <div className="form" aria-label="Ввод суммы">
             <div className="input">
-                <input id="repay-input-box" className="input-box" type="number" placeholder="0" onInput={(event) => {props.setDisabled(event.target.value <= 0 ? true : false)}} />
+                <input id="repay-input-box" className="input-box" type="number" placeholder="0" onInput={(event) => {props.setDisabled((event.target.value <= 0 || event.target.value > props.max * .8) ? true : false)}} />
                 <div className="max-button-wrapper" aria-label="Или максимально возможное количество">
                     <span>or</span>
                     <button className="max-button" 
-                        onClick={() => {document.getElementById("repay-input-box").value = 100 * .8}} aria-label="Ввести 80%">80% limit</button>
+                        onClick={() => {document.getElementById("repay-input-box").value = props.max * .8}} aria-label="Ввести 80%">80% limit</button>
                 </div>
             </div>
         </div>
@@ -317,7 +338,12 @@ function RepayTab(props) {
                 </span>
             </div>
 
-            <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} disabled={props.disabled} aria-label="Отдать долг">Подтвердить</Button>
+            <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} disabled={props.disabled} aria-label="Отдать долг">
+                <FormattedMessage
+                    id="confirmButton"
+                    defaultMessage="sample text"
+                    value={{locale}} />
+            </Button>
         </div>
         </>
     );

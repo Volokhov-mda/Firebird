@@ -14,7 +14,7 @@ export default function CoinInfo(props, locale) {
                 <div className="coin-description">
                     <div className="description-content" aria-label="Описаные валюты">{props.locale === "ru" ? props.market.descriptionRU : props.market.descriptionENG}</div>
                     <div className="back-button-wrapper">
-                        <button className="back-button" onClick={() => { window.history.go(document.referrer); }} aria-label="Кнопка Назад">
+                        <button className="back-button" onClick={() => { window.history.go(-1); }} aria-label="Кнопка Назад">
                             <FormattedMessage
                                 id="backButton"
                                 defaultMessage="sample text"

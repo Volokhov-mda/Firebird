@@ -16,6 +16,7 @@
         "withdraw": "Вывести валюту",
         "borrow": "Занять валюту",
         "repay": "Отдать долг",
+        "confirmButton": "Подтвердить",
 
         "backButton": "← Назад",
 
@@ -49,6 +50,7 @@
         "supplyMarket": "Supply markets",
         "borrowMarket": "Borrow markets",
         "moreAboutCoin": "More about coin...",
+        "confirmButton": "Confirm",
 
         "backButton": "← Back",
 
