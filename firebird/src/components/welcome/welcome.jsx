@@ -13,7 +13,7 @@ export default function Welcome(props, locale) {
         <div className="welcome-wrapper">
             {/* TODO: Режим для слабовидящих */}
             <div className="welcome-header">
-                <span className="app-name">Firebird Finance</span> -<br /> 
+                <span className="app-name">Firebird Finance</span><br /> 
                 <FormattedMessage
                     id="welcomeSubtitle"
                     defaultMessage="sample text"

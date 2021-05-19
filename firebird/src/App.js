@@ -23,6 +23,7 @@ export default function App() {
   const [locale, setLocale] = useState("ru");
   const [renderMarkets, setRenderMarkets] = useState(false);
   const [coinsData, setCoinsData] = useState(undefined);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
   const fetchCoinsData = () => {
     fetch(apiURL)
@@ -67,9 +68,9 @@ export default function App() {
           }
 
           <Route>
-            <div style={{"color": "#000"}}>
-              404
-              <Loader width="200" height="200" />
+            <div className="page-404-wrapper" aria-label="Ошибка 404 - страница не найдена">
+              <div className="page-404-header">404</div>
+              <div className="page-404-not-found">Данной страницы приложения не существует!</div>
             </div>
           </Route>
         </Switch>

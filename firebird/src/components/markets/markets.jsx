@@ -21,6 +21,10 @@ export default function Markets(props, locale) {
     const [firstTabActive, setFirstTabActive] = useState(true);
     const [pressedAsset, setPressedAsset] = useState(undefined);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [disabledSupply, setDisabledSupply] = useState(true);
+    const [disabledWithdraw, setDisabledWithdraw] = useState(true);
+    const [disabledBorrow, setDisabledBorrow] = useState(true);
+    const [disabledRepay, setDisabledRepay] = useState(true);
 
     window.addEventListener("resize", () => {
         setWindowWidth(window.innerWidth);
@@ -112,14 +116,14 @@ export default function Markets(props, locale) {
                     : firstTabActive 
                         ? <div className="info" aria-label={props.isSupply ? "Вкладка Supply" : "Вкладка Borrow"}>
                             {props.isSupply 
-                                ? <SupplyTab pressedAsset={pressedAsset} />
-                                : <BorrowTab pressedAsset={pressedAsset} />
+                                ? <SupplyTab pressedAsset={pressedAsset} disabled={disabledSupply} setDisabled={setDisabledSupply} />
+                                : <BorrowTab pressedAsset={pressedAsset} disabled={disabledBorrow} setDisabled={setDisabledBorrow} />
                             }
                         </div>
                         : <div className="info" aria-label={props.isSupply ? "Вкладка Withdraw" : "Вкладка Repay"}>
                             {props.isSupply 
-                                ? <WithdrawTab pressedAsset={pressedAsset} />
-                                : <RepayTab pressedAsset={pressedAsset} />
+                                ? <WithdrawTab pressedAsset={pressedAsset} disabled={disabledWithdraw} setDisabled={setDisabledWithdraw} />
+                                : <RepayTab pressedAsset={pressedAsset} disabled={disabledRepay} setDisabled={setDisabledRepay} />
                             }
                         </div>
                     }
@@ -132,6 +136,17 @@ export default function Markets(props, locale) {
 
 function SupplyTab(props) {
     return (
+        <>
+        <div className="form" aria-label="Ввод суммы">
+            <div className="input">
+                <input id="supply-input-box" className="input-box" type="number" placeholder="0" min="0" onInput={(event) => {props.setDisabled(event.target.value <= 0 ? true : false)}} />
+                <div className="max-button-wrapper">
+                    <span>or</span>
+                    <button className="max-button" 
+                        onClick={() => {document.getElementById("supply-input-box").value = 100}} aria-label="Ввести максимум">Max</button>
+                </div>
+            </div>
+        </div>
         <div className="form" aria-label="Supply форма">
             <div className="form-header">Supply</div>
             <div className="calculation" aria-label={`Supply APY = ${props.pressedAsset.supply.apy}%`}>
@@ -150,8 +165,9 @@ function SupplyTab(props) {
                     <span>- %</span>
                 </span>
             </div>
-            <Button color="primary" variant="contained" className="submit-button" aria-label="Включить (enable)">Подтвердить</Button>
+            <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} disabled={props.disabled} aria-label="Включить (enable)">Подтвердить</Button>
         </div>
+        </>
     );
 }
 
@@ -161,7 +177,7 @@ function WithdrawTab(props) {
             {/* TODO: ввод суммы? */}
             <div className="form" aria-label="Ввод суммы">
                 <div className="input">
-                    <input id="withdraw-input-box" className="input-box" type="number" placeholder="0" />
+                    <input id="withdraw-input-box" className="input-box" type="number" placeholder="0" onInput={(event) => {props.setDisabled(event.target.value <= 0 ? true : false)}} />
                     <div className="max-button-wrapper">
                         <span>or</span>
                         <button className="max-button" 
@@ -206,7 +222,7 @@ function WithdrawTab(props) {
                         <span>0%</span>
                     </span>
                 </div>
-                <Button color="primary" variant="contained" className="submit-button" aria-label="Вывести">Подтвердить</Button>
+                <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} disabled={props.disabled} aria-label="Вывести">Подтвердить</Button>
             </div>
         </>
     );
@@ -218,7 +234,7 @@ function BorrowTab(props) {
             {/* TODO: ввод суммы? */}
             <div className="form" aria-label="Ввод суммы">
                 <div className="input">
-                    <input id="borrow-input-box" className="input-box" type="number" placeholder="0" />
+                    <input id="borrow-input-box" className="input-box" type="number" placeholder="0" onInput={(event) => {props.setDisabled(event.target.value <= 0 ? true : false)}} />
                     <div className="max-button-wrapper" aria-label="Или максимально возможное количество">
                         <span>or</span>
                         <button className="max-button" 
@@ -263,7 +279,7 @@ function BorrowTab(props) {
                         <span>0%</span>
                     </span>
                 </div>
-                <Button color="primary" variant="contained" className="submit-button" aria-label="Занять валюту">Подтвердить</Button>
+                <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} disabled={props.disabled} aria-label="Занять валюту">Подтвердить</Button>
             </div>
         </>
     );
@@ -271,6 +287,17 @@ function BorrowTab(props) {
 
 function RepayTab(props) {
     return (
+        <>
+        <div className="form" aria-label="Ввод суммы">
+            <div className="input">
+                <input id="repay-input-box" className="input-box" type="number" placeholder="0" onInput={(event) => {props.setDisabled(event.target.value <= 0 ? true : false)}} />
+                <div className="max-button-wrapper" aria-label="Или максимально возможное количество">
+                    <span>or</span>
+                    <button className="max-button" 
+                        onClick={() => {document.getElementById("repay-input-box").value = 100 * .8}} aria-label="Ввести 80%">80% limit</button>
+                </div>
+            </div>
+        </div>
         <div className="form" aria-label="Borrow форма">
             <div className="form-header">Borrow</div>
             <div className="calculation" aria-label={`Borrow APY = ${props.pressedAsset.borrow.apy}%`}>
@@ -290,7 +317,8 @@ function RepayTab(props) {
                 </span>
             </div>
 
-            <Button color="primary" variant="contained" className="submit-button" aria-label="Отдать долг">Подтвердить</Button>
+            <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} disabled={props.disabled} aria-label="Отдать долг">Подтвердить</Button>
         </div>
+        </>
     );
 }

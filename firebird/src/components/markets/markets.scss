@@ -302,6 +302,10 @@
 
                 margin-top: 15px;
             }
+
+            .submit-button.disabled {
+                background: #909090;
+            }
         }
     }
 }
