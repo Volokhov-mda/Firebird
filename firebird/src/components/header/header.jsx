@@ -116,23 +116,28 @@ export default function Header(props, locale) {
     }
 
     const startConnection = async () => {
-      if (typeof window.web3 !== 'undefined') {
-        window.web3 = new Web3(Web3.givenProvider);
-      } else {
-        setWalletConnected(false);
-      }
-
-      try {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const account = accounts[0];
-        window.wallet = account;
-        window.storageContract = new window.web3.eth.Contract(storageContractABI, storageContractAdress); 
-        setWalletConnected(true); 
-        setLoaderActive(false); 
-      } catch (err) {
-        alert(err.message);
-        setLoaderActive(false);
-      }
+        const { ethereum } = window;
+        if (ethereum && ethereum.isMetaMask) {
+            if (typeof window.web3 !== 'undefined') {
+                window.web3 = new Web3(Web3.givenProvider);
+            } else {
+                setWalletConnected(false);
+            }
+      
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const account = accounts[0];
+                window.wallet = account;
+                window.storageContract = new window.web3.eth.Contract(storageContractABI, storageContractAdress); 
+                setWalletConnected(true); 
+                setLoaderActive(false); 
+            } catch (err) {
+                alert(err.message);
+                setLoaderActive(false);
+            }
+        } else {
+            alert('Please install MetaMask!');
+        }
     }
 
     const handleWalletButton = () => {

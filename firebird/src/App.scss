@@ -9,29 +9,6 @@ a:hover {
     color: $ppnp-color;
 }
 
-.page-404-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    // max-height: 620px;
-    height: 620px;
-
-    margin: 50px 0;
-
-    color: #000;
-
-    .page-404-header {
-        font-size: 80px;
-        font-weight: bold;
-
-        color: $base-color;
-    }
-
-    .page-404-not-found {
-        margin-top: 10px;
-
-        font-weight: 500;
-    }
+button {
+    cursor: pointer;
 }

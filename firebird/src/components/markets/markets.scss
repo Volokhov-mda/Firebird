@@ -225,6 +225,18 @@
                         caret-color: $base-color;
                     }
 
+                    /* Chrome, Safari, Edge, Opera */
+                    .input-box::-webkit-outer-spin-button,
+                    .input-box::-webkit-inner-spin-button {
+                        -webkit-appearance: none;
+                        margin: 0;
+                    }
+
+                    /* Firefox */
+                    .input-box[type=number] {
+                        -moz-appearance: textfield;
+                    }
+
                     .max-button-wrapper {
                         display: flex;
                         justify-content: center;

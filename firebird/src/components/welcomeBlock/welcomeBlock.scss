@@ -12,7 +12,6 @@
     
         .image-block {
             display: flex;
-            justify-content: right;
             align-items: center;
     
             padding: 10px 0;
@@ -28,6 +27,7 @@
         }
 
         .text-block {
+            padding: 0 24px;
             display: flex;
             align-items: center;
         }
@@ -35,7 +35,14 @@
 }
 
 .welcome-block-mobile {
-    flex-direction: column;
+
+    .welcome-block {
+        padding: 10px 0;
+
+        .image-block {
+            justify-content: center;
+        }
+    }
 }
 
 
@@ -61,10 +68,9 @@
     }
 
     .welcome-block-mobile {
-        display: flex;
+        // display: flex;
         
         .text-block {
-            // padding: 30px 24px;
     
             font-size: 24px;
         }

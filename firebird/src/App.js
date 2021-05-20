@@ -14,6 +14,7 @@ import Loader from "./components/loader/loader.jsx";
 import LoaderWindow from "./components/loaderWindow/loaderWindow.jsx";
 
 import "./App.scss";
+import Page404 from "./components/page404/page404.jsx";
 
 const textLocals = require("./textLocals.json");
 
@@ -68,10 +69,7 @@ export default function App() {
           }
 
           <Route>
-            <div className="page-404-wrapper" aria-label="Ошибка 404 - страница не найдена">
-              <div className="page-404-header">404</div>
-              <div className="page-404-not-found">Данной страницы приложения не существует!</div>
-            </div>
+            <Page404 />
           </Route>
         </Switch>
         <Footer locale={locale} />

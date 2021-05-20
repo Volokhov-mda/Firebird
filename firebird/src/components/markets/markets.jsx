@@ -18,8 +18,8 @@ import Loader from "../loader/loader";
 export default function Markets(props, locale) {
     const [modalWindowActive, setModalWindowActive] = useState(false);
 
-    const [loaderActive, setLoaderActive] = useState(true);
-    // const [loaderActive, setLoaderActive] = useState(false);
+    // const [loaderActive, setLoaderActive] = useState(true);
+    const [loaderActive, setLoaderActive] = useState(false);
 
     const [firstTabActive, setFirstTabActive] = useState(true);
     const [pressedAsset, setPressedAsset] = useState(undefined);
