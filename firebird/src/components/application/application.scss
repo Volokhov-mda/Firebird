@@ -1,0 +1,25 @@
+@import "./../../variables.scss";
+
+.markets-container {
+  display: flex;
+  justify-content: space-between;
+  
+  padding: 0 24px;
+  margin: 0 auto 50px;
+  margin-bottom: 50px;
+}
+
+@media (min-width: $bp-640-lower) {
+  .markets-container {
+    flex-direction: row;
+
+    max-width: 1280px;
+  }
+}
+
+@media (max-width: $bp-640-upper) {
+  .markets-container {
+    flex-direction: column;
+    margin-bottom: 0;
+  }
+}

@@ -1,0 +1,5 @@
+<svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path className="background" d="M26 9.15527e-05C40.3594 9.15527e-05 52 11.6392 52 25.9967C52 40.3543 40.3594 51.9934 26 51.9934C11.6406 51.9934 0 40.3543 0 25.9967C0 11.6392 11.6406 9.15527e-05 26 9.15527e-05Z" fill="#999999"/>
+<path className="line" d="M14 30.0066H38.0198" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path className="line" d="M14 22H38.0198" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

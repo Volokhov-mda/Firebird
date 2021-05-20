@@ -1,0 +1,74 @@
+{
+    "ru": {
+        "homeNavButton": "Главная",
+        "appNavButton": "Приложение",
+        "connectWallet": "Подключить кошелек",
+
+        "supplyBalance": "Баланс предложения",
+        "netAPY": "Чистая доходность",
+        "borrowBalance": "Баланс займа",
+        "borrowLimit": "Лимит займа",
+        
+        "supplyMarket": "Рынок предложения",
+        "borrowMarket": "Рынок займа",
+        "moreAboutCoin": "Подробнее о валюте...",
+        "supply": "Предоставить валюту",
+        "withdraw": "Вывести валюту",
+        "borrow": "Занять валюту",
+        "repay": "Отдать долг",
+        "confirmButton": "Подтвердить",
+
+        "backButton": "← Назад",
+
+        "createdBy": "Создали:",
+        "author1": "Никита Волохов",
+        "author2": "Павел Крылов",
+
+        "loading": "Загрузка...",
+        "loading-subtitle": "Возможно, вам необходимо подключить",
+
+        "welcomeSubtitle": "система для проведения сделок РЕПО для криптовалют и токенов",
+        "welcomeBlock1": "В разработанной программе мы внедряем децентрализованную систему для беспрепятственного заимствования токенов и Ether без недостатков существующих подходов, позволяя функционировать надлежащим образом денежным рынкам и создавая безопасный подход к хранению активов с положительной доходностью",
+        "welcomeBlock2": "По сравнению с существующими DeFi-системами, разработанный нами программный продукт позволяет добавлять новые токены, цифровые финансовые активы и криптовалюты в систему, что делает ее более гибкой и удобной для использования с часто появляющимися новыми крипто-активами",
+        "tryNow": "Попробовать сейчас!",
+        "goToApp": "Перейти в приложение",
+
+        "pageNotFoundText": "Данной страницы приложения не существует!"
+    },
+    "en": {
+        "homeNavButton": "Home",
+        "appNavButton": "App",
+        "connectWallet": "Connect wallet",
+
+        "supplyBalance": "Supply Balance",
+        "netAPY": "Net APY",
+        "borrowBalance": "Borrow Balance",
+        "borrowLimit": "Borrow limit",
+
+        "supply": "Supply",
+        "withdraw": "Withdraw",
+        "borrow": "Borrow",
+        "repay": "Repay",
+        "supplyMarket": "Supply markets",
+        "borrowMarket": "Borrow markets",
+        "moreAboutCoin": "More about coin...",
+        "confirmButton": "Confirm",
+
+        "backButton": "← Back",
+
+        "createdBy": "Created by:",
+        "author1": "Nikita Volokhov",
+        "author2": "Pavel Krylov",
+
+        "loading": "Loading...",
+        "loading-subtitle": "You may need to enable",
+
+        "welcomeSubtitle": "the system for conducting REPO transactions for cryptocurrencies and tokens",
+        "welcomeBlock1": "In the developed program, we implement a decentralized system for the smooth borrowing of tokens and Ether without the disadvantages of existing approaches, allowing the money markets to function properly and creating a secure approach to the storage of assets with positive returns.",
+        "welcomeBlock2": "Compared to existing DeFi systems, the software product developed by us allows you to add new tokens, digital financial assets and cryptocurrencies to the system, which makes it more flexible and convenient to use with frequently emerging new crypto assets",
+        "tryNow": "Try now!",
+        "goToApp": "Go to App",
+
+        "pageNotFoundText": "This application page does not exist!"
+    }
+}

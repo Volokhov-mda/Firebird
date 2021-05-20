@@ -1,0 +1,14 @@
+@import "./variables.scss";
+
+a {
+    color: #000;
+    text-decoration-color: $ppnp-color;
+}
+  
+a:hover {
+    color: $ppnp-color;
+}
+
+button {
+    cursor: pointer;
+}

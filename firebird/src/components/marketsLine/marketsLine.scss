@@ -1,0 +1,22 @@
+@import "./../../variables.scss";
+
+.logo-market {
+    display: inline-block;
+
+    width: 40px;
+    height: 40px;
+
+    margin-right: 10px;
+    
+    svg {
+        width: 40px;
+        height: 40px;
+    }
+
+}
+
+@media (max-width: 400px) {
+    .asset-name {
+        display: none;
+    }
+}

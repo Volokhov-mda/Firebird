@@ -1,0 +1,441 @@
+@import "./../../variables.scss";
+ 
+.markets-wrapper {    
+    border: 1px solid #d5d5d5;
+    // border-radius: 13px;
+
+    border-top-left-radius: 13px;
+    border-top-right-radius: 13px;
+    
+    color: #000;
+    background-color: #fefefe;
+
+    -webkit-box-shadow: 0px 2px 11px 2px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 2px 11px 2px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 2px 11px 2px rgba(34, 60, 80, 0.2);
+
+    .market-header {
+        font-size: 22px;
+        font-weight: bold;
+
+        // white-space: nowrap;
+    }
+
+    .item {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+
+        .column-header {
+            color: #787878
+        }
+
+        .market-cell {
+            align-items: center;
+            flex-basis: 80%;
+
+            min-width: 0;
+
+            text-align: end;
+            white-space: nowrap;
+            
+            box-shadow: none;
+        }
+
+        .market-cell:first-child
+
+        .asset-wrapper {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .asset-name {
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+    }
+
+    .item.market {
+        position: relative;
+
+        cursor: pointer;
+    }
+
+    .item.market:hover {
+        background: rgba(0, 0, 0, .012);
+
+        // border-left: 2px solid $base-color;
+    }
+
+    .item.market::before {
+        content: "";
+
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        display: none;
+
+        width: 2px;
+        height: 100%;
+        background: $base-color;
+    }
+
+    .item.market:hover::before {
+        display: block;
+    }
+
+    // Modal window content.
+    .modal-header-wrapper {
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        padding: 8px 15px;
+
+        border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+
+        z-index: 1;
+
+        .modal-header {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            .selected-market-icon {
+                margin-right: 6px;
+
+                svg { 
+                    width: 32px;
+                    height: 32px;
+                }
+            }
+
+            .selected-market-name {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            
+        
+            .cancel-button {
+                position: absolute;
+
+                top: calc(50% - 15px / 2);
+                right: 15px; // As .modal-header's padding.
+
+                width: 20px;
+                height: 20px;
+                
+                padding: 0;
+                border: 0;
+        
+                background: none;
+        
+                cursor: pointer;
+        
+                .cancel-icon {
+                    width: 15px;
+                    height: 15px;
+                }
+            }
+        }
+
+        .modal-coin-info {
+            font-size: 12px;
+        }
+    }
+
+    .tab-wrapper {
+        display: flex;
+
+        width: 100%;
+
+        .tab {
+            position: relative;
+
+            width: 50%;
+            padding: 9px 5px;
+
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            white-space: nowrap;
+
+            box-sizing: content-box;
+
+            cursor: pointer;
+        }
+
+        .tab:hover {
+            background: rgba(0, 0, 0, .017);
+        }
+
+        .tab.active::before {
+            content: "";
+
+            position: absolute;
+            bottom: 0;
+            left: 0;
+
+            width: 100%;
+            height: 2px;
+            background: $base-color;
+        }
+    }
+
+    .tab-content {
+        .loader-wrapper {
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+        }
+        
+        .info {
+            width: 100%;
+
+            padding-bottom: 20px;
+            
+            background: rgba(0, 0, 0, .017);
+
+            .form {
+                padding: 15px 30px 0;
+
+                .input {
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: column;
+
+                    .input-box {
+                        width: 100%;
+                        
+                        // padding: 10px 0;
+                        margin: 10px 0 0;
+                        border: none;
+
+                        font-size: 50px;
+                        
+                        text-align: center;
+
+                        background: none;
+                        outline: none;
+                        caret-color: $base-color;
+                    }
+
+                    /* Chrome, Safari, Edge, Opera */
+                    .input-box::-webkit-outer-spin-button,
+                    .input-box::-webkit-inner-spin-button {
+                        -webkit-appearance: none;
+                        margin: 0;
+                    }
+
+                    /* Firefox */
+                    .input-box[type=number] {
+                        -moz-appearance: textfield;
+                    }
+
+                    .max-button-wrapper {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        .max-button {
+                            padding: 0;
+                            margin-left: 5px;
+                            border: none;
+
+                            font-weight: bold;
+                            text-transform: uppercase;
+
+                            background: none;
+                            color: $base-color;
+
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .form-header {
+                    font-size: 12px;
+
+                    color: #787878;
+                }
+
+                .calculation {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    width: 100%;
+
+                    padding: 15px 0;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+                    .asset-info {
+                        display: flex;
+                        align-items: center;
+
+                        .icon {
+                            display: inline-block;
+    
+                            width: 25px;
+                            height: 25px;
+    
+                            margin-right: 10px;
+    
+                            svg {
+                                width: 25px;
+                                height: 25px;
+                            }
+                        }
+
+                        .description {
+                            font-weight: 500;
+
+                            color: #505050;
+                        }
+                    }
+
+                }
+
+                .calculation:last-of-type {
+                    border-bottom: none;
+                }
+            }
+
+            .submit-button {
+                width: 100%;
+
+                font-size: 16px;
+                font-weight: bold;
+
+                margin-top: 15px;
+            }
+
+            .submit-button.disabled {
+                background: #909090;
+            }
+        }
+    }
+}
+
+
+
+@media (min-width: $bp-640-lower) {
+    .markets-wrapper {
+        width: 48.5%;
+
+        margin-bottom: 0;
+    }
+
+    .item {
+        padding: 20px 25px;
+
+        .market-cell:first-child {
+            text-align: start;
+        }
+
+        .market-cell {
+            justify-content: flex-end;
+
+            font-size: 14px;
+        }
+    }
+
+    .item-header {
+        padding: 15px 25px;
+    }
+}
+
+@media (max-width: $bp-640-upper) {
+    .markets-wrapper {
+        width: 100%;
+
+        margin-bottom: 30px;
+    }
+    
+    .market-cell:first-child {
+        justify-content: flex-start;
+        text-align: start;
+    }
+
+    .market-cell {
+        display: flex;
+        justify-content: flex-end;
+        font-size: 14px;
+    }
+
+    .item {
+        padding: 20px 25px;
+
+        .apy-market {
+            display: flex;
+        }
+        
+        .column-header {
+            font-size: 10px;
+        }
+
+        .market-cell {
+            font-size: 10px;
+        }
+    }
+
+    .item-header {
+        padding: 10px 25px;
+    }
+
+    .modal-window {
+        .modal-header {
+            font-size: 13px;
+        }
+
+        .modal-coin-info a {
+            font-size: 11px;
+        }
+
+        .tab-wrapper .tab {
+            padding: 10px 5px;
+            
+            font-size: 10px;
+        }
+
+        .tab-content .info {
+            .form {
+                padding: 10px 20px 0;
+
+                .calculation {
+                    font-size: 13px;
+                }
+            }
+
+            .submit-button {
+                margin-top: 10px;
+            }
+        }
+    }
+}
+
+@media (max-width: 400px) {
+    .market-cell:first-child {
+        justify-content: flex-start;
+        text-align: start;
+    }
+
+    .market-cell:last-child {
+        justify-content: flex-end;
+    }
+    
+    .item {
+        .apy-market {
+            display: none;
+        }
+    }
+
+    .market-cell {
+        justify-content: center;
+    }
+}
