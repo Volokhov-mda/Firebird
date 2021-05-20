@@ -24,7 +24,6 @@ export default function App() {
   const [locale, setLocale] = useState("ru");
   const [renderMarkets, setRenderMarkets] = useState(false);
   const [coinsData, setCoinsData] = useState(undefined);
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
   const fetchCoinsData = () => {
     fetch(apiURL)
@@ -59,6 +58,7 @@ export default function App() {
               </Route>
           {renderMarkets 
             ? coinsData.markets.map(market => {
+              console.log(coinsData);
                 return (
                   <Route exact path={`/${market.link}`} key={`${market.link}`}>
                     <CoinInfo market={market} locale={locale} />

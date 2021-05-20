@@ -10,7 +10,7 @@ export default function WelcomeBlock(props) {
             <div className="welcome-block-mobile" style={{ backgroundColor: props.backgroundColor }}>
                 <div className="welcome-block">
                     <div className="image-block">
-                        {props.image ? <img src={props.image} className="image-picture" alt="funny pepe haha" /> : <FirebirdLogo />}
+                        {props.image ? <img src={props.image} className="image-picture" alt="blockchain image" /> : <FirebirdLogo />}
                     </div>
                     <div className="text-block">
                         {props.children}
@@ -20,7 +20,7 @@ export default function WelcomeBlock(props) {
             <div className="welcome-block-desktop" style={{ backgroundColor: props.backgroundColor }}>
                 <Grid container spacing={0} style={{ flexDirection: (props.reverse ? "row-reverse" : "row") }} className="welcome-block">
                     <Grid item xs={5} className="image-block" style={{justifyContent: props.reverse ? "flex-end" : "flex-start"}}>
-                        {props.image ? <img src={props.image} className="image-picture" alt="paul awful sad" /> : <FirebirdLogo />}
+                        {props.image ? <img src={props.image} className="image-picture" alt="stonks image" /> : <FirebirdLogo />}
                     </Grid>
                     <Grid item xs={7} className="text-block">
                         <div style={{ textAlign: (props.reverse ? "right" : "left") }} className={`column-header`}>

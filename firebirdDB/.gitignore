@@ -1,0 +1,20 @@
+# python cache
+*.pyc
+__pycache__/
+.ipynb_checkpoints/
+
+# virtual environment
+venv/
+
+# local env
+FirebirdFinance/.env
+
+# database
+db.sqlite3
+*migrations/
+
+# JetBrains IDE
+.idea/
+
+# MacOS trash
+.DS_Store
