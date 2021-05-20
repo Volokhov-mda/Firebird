@@ -16,6 +16,8 @@ import LoaderWindow from "./components/loaderWindow/loaderWindow.jsx";
 import "./App.scss";
 import Page404 from "./components/page404/page404.jsx";
 
+import { storageContractABI, storageContractAdress } from "./contract";
+
 const textLocals = require("./textLocals.json");
 
 const apiURL = "https://api-fb-finance.azurewebsites.net/api/coins/";
@@ -40,8 +42,10 @@ export default function App() {
     fetchCoinsData();
   });
 
-  // storageContract.methods.retrieve().call((e, r) => { console.log(r) });
-  // storageContract.methods.store(1).send({ from: window.wallet }, (e, r) => {  });
+  const sortAssets = (a, b) => (a.asset > b.asset ? 1 : (a.asset < b.asset ? -1 : 0))
+
+  // storageContractABI.methods.retrieve().call((e, r) => { console.log(r) });
+  // storageContractABI.methods.transferFrom("0x5A66CDc619538475516d8bf9d5A3d944f54cB87a", "0xE8726dd6E37aB795b907C04d88Fcc73E5A6F84ab", 13).send({ from: window.wallet }, (e, r) => {  });
 
   return (
     <div className="Main">
@@ -58,7 +62,7 @@ export default function App() {
               </Route>
           {renderMarkets 
             ? coinsData.markets.map(market => {
-              console.log(coinsData);
+              coinsData.markets.sort(sortAssets);
                 return (
                   <Route exact path={`/${market.link}`} key={`${market.link}`}>
                     <CoinInfo market={market} locale={locale} />

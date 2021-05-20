@@ -128,7 +128,9 @@ export default function Header(props, locale) {
                 const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 const account = accounts[0];
                 window.wallet = account;
-                window.storageContract = new window.web3.eth.Contract(storageContractABI, storageContractAdress); 
+                window.storageContractDai = new window.web3.eth.Contract(storageContractABI, storageContractAdress); 
+                window.storageContractHse = new window.web3.eth.Contract(storageContractABI, "0x2a59001CCc7D5D622AFaf37C89fB37a99D6Ef9D7"); 
+                window.storageContractUsdc = new window.web3.eth.Contract(storageContractABI, "0x285E2C9b7Ca9ff09f8Fc8663BCb9d0FD365e696E"); 
                 setWalletConnected(true); 
                 setLoaderActive(false); 
             } catch (err) {
@@ -169,7 +171,6 @@ export default function Header(props, locale) {
                   </Route>
                 </div>
               </div>
-
 
               <div className="header-item nav-buttons">
                 <div className="nav-buttons-wrapper" aria-label="Кнопки навигации">

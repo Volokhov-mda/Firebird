@@ -15,6 +15,12 @@ import { ReactComponent as CancelIcon } from "../../media/icons/cancel.svg";
 import { Link } from "react-router-dom";
 import Loader from "../loader/loader";
 
+//create your forceUpdate hook
+function useForceUpdate() {
+    const [value, setValue] = useState(0); // integer state
+    return () => setValue(value => value + 1); // update the state to force render
+}
+
 export default function Markets(props, locale) {
     const [modalWindowActive, setModalWindowActive] = useState(false);
 
@@ -30,11 +36,67 @@ export default function Markets(props, locale) {
     const [disabledBorrow, setDisabledBorrow] = useState(true);
     const [disabledRepay, setDisabledRepay] = useState(true);
 
+    const [renderMarkets, setRenderMarkets] = useState(true);
+
     const maxValue = 100;
 
     window.addEventListener("resize", () => {
         setWindowWidth(window.innerWidth);
     });
+
+    const [daiWalletSupply, setDaiWalletSupply] = useState(0);
+    const [daiWalletBorrow, setDaiWalletBorrow] = useState(0);
+
+    const [hseWalletSupply, setHseWalletSupply] = useState(0);
+    const [hseWalletBorrow, setHseWalletBorrow] = useState(0);
+
+    const [usdcWalletSupply, setUsdcWalletSupply] = useState(0);
+    const [usdcWalletBorrow, setUsdcWalletBorrow] = useState(0);
+
+    (async () => {
+        // if (window.storageContractDai) {
+            setTimeout(async () => {
+                if (window.storageContractDai) {
+                    setDaiWalletSupply(await window.storageContractDai.methods.balanceOf(window.wallet).call((e, r) => { }) / 10);
+                    setDaiWalletBorrow(Math.round(await window.storageContractDai.methods.balanceOf(window.wallet).call((e, r) => { }) / 10 * 100 - 500) / 100);
+
+                    setHseWalletSupply(await window.storageContractHse.methods.balanceOf(window.wallet).call((e, r) => { }) / 10);
+                    setHseWalletBorrow(Math.round(await window.storageContractHse.methods.balanceOf(window.wallet).call((e, r) => { }) / 10 * 100 - 700) / 100);
+
+                    setUsdcWalletSupply(await window.storageContractUsdc.methods.balanceOf(window.wallet).call((e, r) => { }) / 10);
+                    setUsdcWalletBorrow(Math.round(await window.storageContractUsdc.methods.balanceOf(window.wallet).call((e, r) => { }) / 10 * 100 - 200) / 100);
+                }
+                setRenderMarkets(false);
+                setRenderMarkets(true);
+            }, 5000);
+        // }
+    })();
+
+    const getWalletSupply = (asset) => {
+        switch (asset) {
+            case "Dai":
+                return daiWalletSupply;
+            case "HSE Coin":
+                return hseWalletSupply;
+            case "USD Coin":
+                return usdcWalletSupply;
+            default:
+                return 0;
+        }
+    }
+
+    const getWalletBorrow = (asset) => {
+        switch (asset) {
+            case "Dai":
+                return daiWalletBorrow;
+                case "HSE Coin":
+                    return hseWalletBorrow;
+                case "USD Coin":
+                    return usdcWalletBorrow;
+            default:
+                return 0;
+        }
+    }
 
     return (
         <div className="markets-wrapper" aria-label={props.ariaLabel}>
@@ -56,7 +118,8 @@ export default function Markets(props, locale) {
                 </Grid>
             </div>
             
-            {props.markets.map(market => {
+            {renderMarkets ?
+                props.markets.map((market) => {
                 return (
                     <div className="item market" key={market.asset} aria-label={`Ассет ${market.asset}`}
                         onClick={() => { setModalWindowActive(true); setPressedAsset(market); }}>
@@ -64,10 +127,12 @@ export default function Markets(props, locale) {
                             logo={market.logo} 
                             asset={market.asset} 
                             apy={props.isSupply ? market.supply.apy : market.borrow.apy} 
-                            wallet={props.isSupply ? market.supply.wallet : market.borrow.wallet} />
+                            wallet={props.isSupply ? `${getWalletSupply(market.asset)} ${market.link.toUpperCase()}` : `${getWalletBorrow(market.asset)} ${market.link.toUpperCase()}`}
+                            // wallet={props.isSupply ? market.supply.wallet : market.borrow.wallet}
+                        />
                     </div>
                 );
-            })}
+            }) : null}
 
             {modalWindowActive 
             ? <ModalWindow active={modalWindowActive} setActive={setModalWindowActive} asset={pressedAsset.asset}>
@@ -122,14 +187,14 @@ export default function Markets(props, locale) {
                     : firstTabActive 
                         ? <div className="info" aria-label={props.isSupply ? "Вкладка Supply" : "Вкладка Borrow"}>
                             {props.isSupply 
-                                ? <SupplyTab pressedAsset={pressedAsset} disabled={disabledSupply} setDisabled={setDisabledSupply} max={maxValue} />
-                                : <BorrowTab pressedAsset={pressedAsset} disabled={disabledBorrow} setDisabled={setDisabledBorrow} max={maxValue} />
+                                ? <SupplyTab pressedAsset={pressedAsset} disabled={disabledSupply} setDisabled={setDisabledSupply} max={maxValue} setLoaderActive={setLoaderActive} />
+                                : <BorrowTab pressedAsset={pressedAsset} disabled={disabledBorrow} setDisabled={setDisabledBorrow} max={maxValue} setLoaderActive={setLoaderActive} />
                             }
                         </div>
                         : <div className="info" aria-label={props.isSupply ? "Вкладка Withdraw" : "Вкладка Repay"}>
                             {props.isSupply 
-                                ? <WithdrawTab pressedAsset={pressedAsset} disabled={disabledWithdraw} setDisabled={setDisabledWithdraw} max={maxValue} />
-                                : <RepayTab pressedAsset={pressedAsset} disabled={disabledRepay} setDisabled={setDisabledRepay} max={maxValue} />
+                                ? <WithdrawTab pressedAsset={pressedAsset} disabled={disabledWithdraw} setDisabled={setDisabledWithdraw} max={maxValue} setLoaderActive={setLoaderActive} />
+                                : <RepayTab pressedAsset={pressedAsset} disabled={disabledRepay} setDisabled={setDisabledRepay} max={maxValue} setLoaderActive={setLoaderActive} />
                             }
                         </div>
                     }
@@ -138,6 +203,86 @@ export default function Markets(props, locale) {
             : null}
         </div>
     );
+}
+
+const handleSupplyTransaction = async (asset, amount, setLoaderActive) => {
+    if (!window.storageContractDai) {
+        alert("You must connect MetaMask at first!");
+        return;
+    } 
+
+    switch(asset) {
+        case "Dai":
+            const fireDAI = "0x5A66CDc619538475516d8bf9d5A3d944f54cB87a";
+            setLoaderActive(true);
+            await window.storageContractDai.methods.transferFrom(window.wallet, fireDAI, amount).send({ from: window.wallet }, (e, r) => { });
+            setLoaderActive(false);
+            alert("Successful!");
+            return;
+
+        default:
+            return;
+    }
+}
+
+const handleWithdrawTransaction = async (asset, amount, setLoaderActive) => {
+    if (!window.storageContractDai) {
+        alert("You must connect MetaMask at first!");
+        return;
+    } 
+
+    switch(asset) {
+        case "Dai":
+            const fireDAI = "0x5A66CDc619538475516d8bf9d5A3d944f54cB87a";
+            setLoaderActive(true);
+            await window.storageContractDai.methods.transferFrom(fireDAI, window.wallet, amount).send({ from: window.wallet }, (e, r) => { });
+            setLoaderActive(false);
+            alert("Successful!");
+            return;
+
+        default:
+            return;
+    }
+}
+
+const handleBorrowTransaction = async (asset, amount, setLoaderActive) => {
+    if (!window.storageContractDai) {
+        alert("You must connect MetaMask at first!");
+        return;
+    } 
+
+    switch(asset) {
+        case "Dai":
+            const fireDAI = "0x5A66CDc619538475516d8bf9d5A3d944f54cB87a";
+            setLoaderActive(true);
+            await window.storageContractDai.methods.transferFrom(fireDAI, window.wallet, amount).send({ from: window.wallet }, (e, r) => { });
+            setLoaderActive(false);
+            alert("Successful!");
+            return;
+
+        default:
+            return;
+    }
+}
+
+const handleRepayTransaction = async (asset, amount, setLoaderActive) => {
+    if (!window.storageContractDai) {
+        alert("You must connect MetaMask at first!");
+        return;
+    } 
+
+    switch(asset) {
+        case "Dai":
+            const fireDAI = "0x5A66CDc619538475516d8bf9d5A3d944f54cB87a";
+            setLoaderActive(true);
+            await window.storageContractDai.methods.transferFrom(window.wallet, fireDAI, amount).send({ from: window.wallet }, (e, r) => { });
+            setLoaderActive(false);
+            alert("Successful!");
+            return;
+
+        default:
+            return;
+    }
 }
 
 function SupplyTab(props, locale) {
@@ -171,7 +316,8 @@ function SupplyTab(props, locale) {
                     <span>- %</span>
                 </span>
             </div>
-            <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} disabled={props.disabled} aria-label="Включить (enable)">
+            <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} 
+            onClick={() => handleSupplyTransaction(props.pressedAsset.asset, document.getElementById("supply-input-box").value, props.setLoaderActive)} disabled={props.disabled} aria-label="Включить (enable)">
                 <FormattedMessage
                     id="confirmButton"
                     defaultMessage="sample text"
@@ -233,7 +379,8 @@ function WithdrawTab(props, locale) {
                         <span>0%</span>
                     </span>
                 </div>
-                <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} disabled={props.disabled} aria-label="Вывести">
+                <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} 
+                onClick={() => handleWithdrawTransaction(props.pressedAsset.asset, document.getElementById("withdraw-input-box").value, props.setLoaderActive)} disabled={props.disabled} aria-label="Вывести">
                     <FormattedMessage
                         id="confirmButton"
                         defaultMessage="sample text"
@@ -295,7 +442,8 @@ function BorrowTab(props, locale) {
                         <span>0%</span>
                     </span>
                 </div>
-                <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} disabled={props.disabled} aria-label="Занять валюту">
+                <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} 
+                onClick={() => handleBorrowTransaction(props.pressedAsset.asset, document.getElementById("borrow-input-box").value, props.setLoaderActive)} disabled={props.disabled} aria-label="Занять валюту">
                     <FormattedMessage
                         id="confirmButton"
                         defaultMessage="sample text"
@@ -338,7 +486,8 @@ function RepayTab(props, locale) {
                 </span>
             </div>
 
-            <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} disabled={props.disabled} aria-label="Отдать долг">
+            <Button color="primary" variant="contained" className={"submit-button" + (props.disabled ? " disabled" : "")} 
+            onClick={() => handleRepayTransaction(props.pressedAsset.asset, document.getElementById("repay-input-box").value, props.setLoaderActive)} disabled={props.disabled} aria-label="Отдать долг">
                 <FormattedMessage
                     id="confirmButton"
                     defaultMessage="sample text"
