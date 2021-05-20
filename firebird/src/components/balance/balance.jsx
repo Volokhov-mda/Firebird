@@ -8,13 +8,13 @@ export default function Balance(props, locale) {
     const [renderBalance, setRenderBalance] = useState(true);
     const [balance, setBalance] = useState(0);
 
-    setTimeout(async () => {
+    setInterval(async () => {
         if (window.storageContractDai) {
             setBalance(await window.storageContractDai.methods.balanceOf("0x5A66CDc619538475516d8bf9d5A3d944f54cB87a").call((e, r) => { }) * 3 + 1000)
         }
         setRenderBalance(false);
         setRenderBalance(true);
-    }, 5000);
+    }, 7000);
 
     return (
         <div className="balance-container" aria-label="Текущие балансы предложения (supply) и займа (borrow)">

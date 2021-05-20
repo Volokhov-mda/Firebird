@@ -55,7 +55,7 @@ export default function Markets(props, locale) {
 
     (async () => {
         // if (window.storageContractDai) {
-            setTimeout(async () => {
+            setInterval(async () => {
                 if (window.storageContractDai) {
                     setDaiWalletSupply(await window.storageContractDai.methods.balanceOf(window.wallet).call((e, r) => { }) / 10);
                     setDaiWalletBorrow(Math.round(await window.storageContractDai.methods.balanceOf(window.wallet).call((e, r) => { }) / 10 * 100 - 500) / 100);
@@ -68,7 +68,7 @@ export default function Markets(props, locale) {
                 }
                 setRenderMarkets(false);
                 setRenderMarkets(true);
-            }, 5000);
+            }, 7000);
         // }
     })();
 
@@ -211,17 +211,35 @@ const handleSupplyTransaction = async (asset, amount, setLoaderActive) => {
         return;
     } 
 
-    switch(asset) {
-        case "Dai":
-            const fireDAI = "0x5A66CDc619538475516d8bf9d5A3d944f54cB87a";
-            setLoaderActive(true);
-            await window.storageContractDai.methods.transferFrom(window.wallet, fireDAI, amount).send({ from: window.wallet }, (e, r) => { });
-            setLoaderActive(false);
-            alert("Successful!");
-            return;
-
-        default:
-            return;
+    try {
+        switch(asset) {
+            case "Dai":
+                const fireDAI = "0x5A66CDc619538475516d8bf9d5A3d944f54cB87a";
+                setLoaderActive(true);
+                await window.storageContractDai.methods.transferFrom(window.wallet, fireDAI, amount).send({ from: window.wallet }, (e, r) => { });
+                setLoaderActive(false);
+                alert("Successful!");
+                return;
+            case "HSE Coin":
+                const fireHSE = "0x2a59001CCc7D5D622AFaf37C89fB37a99D6Ef9D7";
+                setLoaderActive(true);
+                await window.storageContractDai.methods.transferFrom(window.wallet, fireHSE, amount).send({ from: window.wallet }, (e, r) => { });
+                setLoaderActive(false);
+                alert("Successful!");
+                return;
+            case "USD Coin":
+                const fireUSDC = "0x285E2C9b7Ca9ff09f8Fc8663BCb9d0FD365e696E";
+                setLoaderActive(true);
+                await window.storageContractDai.methods.transferFrom(window.wallet, fireUSDC, amount).send({ from: window.wallet }, (e, r) => { });
+                setLoaderActive(false);
+                alert("Successful!");
+                return;
+            default:
+                return;
+        }
+    } catch (err) {
+        alert(err.message);
+        setLoaderActive(false);
     }
 }
 
@@ -231,17 +249,35 @@ const handleWithdrawTransaction = async (asset, amount, setLoaderActive) => {
         return;
     } 
 
-    switch(asset) {
-        case "Dai":
-            const fireDAI = "0x5A66CDc619538475516d8bf9d5A3d944f54cB87a";
-            setLoaderActive(true);
-            await window.storageContractDai.methods.transferFrom(fireDAI, window.wallet, amount).send({ from: window.wallet }, (e, r) => { });
-            setLoaderActive(false);
-            alert("Successful!");
-            return;
-
-        default:
-            return;
+    try {
+        switch(asset) {
+            case "Dai":
+                const fireDAI = "0x5A66CDc619538475516d8bf9d5A3d944f54cB87a";
+                setLoaderActive(true);
+                await window.storageContractDai.methods.transferFrom(fireDAI, window.wallet, amount).send({ from: window.wallet }, (e, r) => { });
+                setLoaderActive(false);
+                alert("Successful!");
+                return;
+            case "HSE Coin":
+                const fireHSE = "0x2a59001CCc7D5D622AFaf37C89fB37a99D6Ef9D7";
+                setLoaderActive(true);
+                await window.storageContractDai.methods.transferFrom(fireHSE, window.wallet, amount).send({ from: window.wallet }, (e, r) => { });
+                setLoaderActive(false);
+                alert("Successful!");
+                return;
+            case "USD Coin":
+                const fireUSDC = "0x285E2C9b7Ca9ff09f8Fc8663BCb9d0FD365e696E";
+                setLoaderActive(true);
+                await window.storageContractDai.methods.transferFrom(fireUSDC, window.wallet, amount).send({ from: window.wallet }, (e, r) => { });
+                setLoaderActive(false);
+                alert("Successful!");
+                return;
+            default:
+                return;
+        }
+    } catch (err) {
+        alert(err.message);
+        setLoaderActive(false);
     }
 }
 
@@ -251,17 +287,35 @@ const handleBorrowTransaction = async (asset, amount, setLoaderActive) => {
         return;
     } 
 
-    switch(asset) {
-        case "Dai":
-            const fireDAI = "0x5A66CDc619538475516d8bf9d5A3d944f54cB87a";
-            setLoaderActive(true);
-            await window.storageContractDai.methods.transferFrom(fireDAI, window.wallet, amount).send({ from: window.wallet }, (e, r) => { });
-            setLoaderActive(false);
-            alert("Successful!");
-            return;
-
-        default:
-            return;
+    try {
+        switch(asset) {
+            case "Dai":
+                const fireDAI = "0x5A66CDc619538475516d8bf9d5A3d944f54cB87a";
+                setLoaderActive(true);
+                await window.storageContractDai.methods.transferFrom(fireDAI, window.wallet, amount).send({ from: window.wallet }, (e, r) => { });
+                setLoaderActive(false);
+                alert("Successful!");
+                return;
+            case "HSE Coin":
+                const fireHSE = "0x2a59001CCc7D5D622AFaf37C89fB37a99D6Ef9D7";
+                setLoaderActive(true);
+                await window.storageContractDai.methods.transferFrom(fireHSE, window.wallet, amount).send({ from: window.wallet }, (e, r) => { });
+                setLoaderActive(false);
+                alert("Successful!");
+                return;
+            case "USD Coin":
+                const fireUSDC = "0x285E2C9b7Ca9ff09f8Fc8663BCb9d0FD365e696E";
+                setLoaderActive(true);
+                await window.storageContractDai.methods.transferFrom(fireUSDC, window.wallet, amount).send({ from: window.wallet }, (e, r) => { });
+                setLoaderActive(false);
+                alert("Successful!");
+                return;
+            default:
+                return;
+        }
+    } catch (err) {
+        alert(err.message);
+        setLoaderActive(false);
     }
 }
 
@@ -271,17 +325,35 @@ const handleRepayTransaction = async (asset, amount, setLoaderActive) => {
         return;
     } 
 
-    switch(asset) {
-        case "Dai":
-            const fireDAI = "0x5A66CDc619538475516d8bf9d5A3d944f54cB87a";
-            setLoaderActive(true);
-            await window.storageContractDai.methods.transferFrom(window.wallet, fireDAI, amount).send({ from: window.wallet }, (e, r) => { });
-            setLoaderActive(false);
-            alert("Successful!");
-            return;
-
-        default:
-            return;
+    try {
+        switch(asset) {
+            case "Dai":
+                const fireDAI = "0x5A66CDc619538475516d8bf9d5A3d944f54cB87a";
+                setLoaderActive(true);
+                await window.storageContractDai.methods.transferFrom(window.wallet, fireDAI, amount).send({ from: window.wallet }, (e, r) => { });
+                setLoaderActive(false);
+                alert("Successful!");
+                return;
+            case "HSE Coin":
+                const fireHSE = "0x2a59001CCc7D5D622AFaf37C89fB37a99D6Ef9D7";
+                setLoaderActive(true);
+                await window.storageContractDai.methods.transferFrom(window.wallet, fireHSE, amount).send({ from: window.wallet }, (e, r) => { });
+                setLoaderActive(false);
+                alert("Successful!");
+                return;
+            case "USD Coin":
+                const fireUSDC = "0x285E2C9b7Ca9ff09f8Fc8663BCb9d0FD365e696E";
+                setLoaderActive(true);
+                await window.storageContractDai.methods.transferFrom(window.wallet, fireUSDC, amount).send({ from: window.wallet }, (e, r) => { });
+                setLoaderActive(false);
+                alert("Successful!");
+                return;
+            default:
+                return;
+        }
+    } catch (err) {
+        alert(err.message);
+        setLoaderActive(false);
     }
 }
 
