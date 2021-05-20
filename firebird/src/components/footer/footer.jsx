@@ -22,13 +22,13 @@ export default function Footer(props, locale) {
                             value={{locale}} />
                     </div>
                     <div className="footer-block-content">
-                        <div className="creator"><a href="#">
+                        <div className="creator"><a href="https://github.com/Volokhov-mda">
                             <FormattedMessage
                                 id="author1"
                                 defaultMessage="sample text"
                                 value={{locale}} />
                         </a></div>
-                        <div className="creator"><a href="#">
+                        <div className="creator"><a href="https://github.com/pkryloff">
                             <FormattedMessage
                                 id="author2"
                                 defaultMessage="sample text"
