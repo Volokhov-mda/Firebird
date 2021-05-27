@@ -33,6 +33,7 @@ export default function App() {
         return response.json();
       })
       .then((data) => {
+        data.markets.sort(sortAssets);
         setCoinsData(data);
         setRenderMarkets(true);
       });
@@ -62,7 +63,6 @@ export default function App() {
               </Route>
           {renderMarkets 
             ? coinsData.markets.map(market => {
-              coinsData.markets.sort(sortAssets);
                 return (
                   <Route exact path={`/${market.link}`} key={`${market.link}`}>
                     <CoinInfo market={market} locale={locale} />
